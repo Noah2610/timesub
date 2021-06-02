@@ -33,35 +33,36 @@ export function createTimer(opts?: Partial<TimerOptions>): TimerApi {
         ...opts,
     };
 
-    const [state, internalState] = createState();
-    const api = createApi(state, internalState, options);
+    const state = createState();
+    const api = createApi(state, options);
 
     return api;
 }
 
-interface InternalTimerState {
+interface TimerInternalState {
     timeout: NodeJS.Timeout | undefined;
     lastUpdate: number | undefined;
+    subscribers: Record<number, TimerSubscriber>;
+    nextSubscriberIdx: number;
 }
 
-function createState(): [TimerState, InternalTimerState] {
-    return [
-        {
-            time: 0.0,
-            isPlaying: false,
-        },
-        {
-            timeout: undefined,
-            lastUpdate: undefined,
-        },
-    ];
+function createState(): TimerState {
+    return {
+        time: 0.0,
+        isPlaying: false,
+    };
 }
 
-function createApi(
-    state: TimerState,
-    internalState: InternalTimerState,
-    options: TimerOptions,
-): TimerApi {
+function createInternalState(): TimerInternalState {
+    return {
+        timeout: undefined,
+        lastUpdate: undefined,
+        subscribers: [],
+        nextSubscriberIdx: 0,
+    };
+}
+
+function createApi(state: TimerState, options: TimerOptions): TimerApi {
     const createTimeout = () => setTimeout(update, options.updateInterval);
 
     const isFinished = () => {
@@ -71,7 +72,7 @@ function createApi(
         return state.time >= options.duration;
     };
 
-    const subscribers: TimerSubscriber[] = [];
+    const internalState = createInternalState();
 
     const play = () => {
         if (state.isPlaying || isFinished()) {
@@ -116,9 +117,9 @@ function createApi(
     const isPlaying = () => state.isPlaying;
 
     const subscribe: TimerApiSubscribe = (subscriber) => {
-        subscribers.push(subscriber);
-        const idx = subscribers.length - 1;
-        return () => subscribers.splice(idx, 1);
+        const idx = internalState.nextSubscriberIdx++;
+        internalState.subscribers[idx] = subscriber;
+        return () => delete internalState.subscribers[idx];
     };
 
     const api: TimerApi = {
@@ -132,7 +133,7 @@ function createApi(
     };
 
     const updateSubscribers = () => {
-        for (const subscriber of subscribers) {
+        for (const subscriber of Object.values(internalState.subscribers)) {
             subscriber(state, api);
         }
     };
@@ -148,7 +149,6 @@ function createApi(
 
     const update = () => {
         updateTime();
-        console.log(`update: ${state.time}`);
         updateSubscribers();
 
         if (isFinished()) {
