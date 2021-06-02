@@ -54,6 +54,12 @@ export interface TimerApi {
     togglePlay(): boolean;
 
     /**
+     * Resets the timer time to 0, and stops the timer if it was playing.
+     * All subscriptions will be kept.
+     */
+    reset(): void;
+
+    /**
      * Get playback status.
      */
     getIsPlaying(): boolean;
@@ -116,17 +122,16 @@ export function createTimer(opts?: Partial<TimerOptions>): Timer {
         ...opts,
     };
 
-    const state = createState();
     const internalState = createInternalState();
 
     const createTimeout = () => setTimeout(update, options.updateInterval);
 
     const play = () => {
-        if (state.isPlaying || state.isFinished) {
+        if (timer.isPlaying || timer.isFinished) {
             return false;
         }
 
-        state.isPlaying = true;
+        timer.isPlaying = true;
         internalState.timeout !== undefined &&
             clearTimeout(internalState.timeout);
         updateTime();
@@ -137,11 +142,11 @@ export function createTimer(opts?: Partial<TimerOptions>): Timer {
     };
 
     const pause = () => {
-        if (!state.isPlaying || state.isFinished) {
+        if (!timer.isPlaying || timer.isFinished) {
             return false;
         }
 
-        state.isPlaying = false;
+        timer.isPlaying = false;
         internalState.timeout !== undefined &&
             clearTimeout(internalState.timeout);
         updateTime();
@@ -151,17 +156,27 @@ export function createTimer(opts?: Partial<TimerOptions>): Timer {
         return true;
     };
 
-    const togglePlay = () => (state.isPlaying ? pause() : play());
+    const togglePlay = () => (timer.isPlaying ? timer.pause() : timer.play());
+
+    const reset = () => {
+        timer.pause();
+        timer.setTime(0);
+        updateIsFinished();
+        updateSubscribers();
+        internalState.timeout !== undefined &&
+            clearTimeout(internalState.timeout);
+        internalState.lastUpdate = undefined;
+    };
 
     const getTime = () => {
-        return state.time;
+        return timer.time;
     };
 
     const setTime = (time: number) => {
-        state.time = time;
+        timer.time = time;
     };
 
-    const getIsPlaying = () => state.isPlaying;
+    const getIsPlaying = () => timer.isPlaying;
 
     const subscribe: TimerApiSubscribe = (subscriber) => {
         const idx = internalState.nextSubscriberIdx++;
@@ -169,22 +184,12 @@ export function createTimer(opts?: Partial<TimerOptions>): Timer {
         return () => delete internalState.subscribers[idx];
     };
 
-    const api: TimerApi = {
-        getTime,
-        setTime,
-        play,
-        pause,
-        togglePlay,
-        getIsPlaying,
-        subscribe,
-    };
-
     const update = () => {
         updateTime();
         updateIsFinished();
         updateSubscribers();
 
-        if (!state.isFinished) {
+        if (!timer.isFinished) {
             internalState.timeout = createTimeout();
         }
     };
@@ -193,16 +198,17 @@ export function createTimer(opts?: Partial<TimerOptions>): Timer {
         const lastUpdate = internalState.lastUpdate ?? new Date().getTime();
         const now = new Date().getTime();
         const diff = now - lastUpdate;
-        state.time += diff;
+        timer.time += diff;
 
         internalState.lastUpdate = now;
     };
 
     const updateIsFinished = () => {
         if (options.duration === "infinite") {
-            state.isFinished = false;
+            timer.isFinished = false;
+        } else {
+            timer.isFinished = timer.time >= options.duration;
         }
-        state.isFinished = state.time >= options.duration;
     };
 
     const updateSubscribers = () => {
@@ -211,8 +217,19 @@ export function createTimer(opts?: Partial<TimerOptions>): Timer {
         }
     };
 
+    const api: TimerApi = {
+        getTime,
+        setTime,
+        play,
+        pause,
+        togglePlay,
+        reset,
+        getIsPlaying,
+        subscribe,
+    };
+
     const timer: Timer = {
-        ...state,
+        ...createState(),
         ...api,
     };
 
