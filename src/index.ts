@@ -51,12 +51,21 @@ export function createTimer(opts?: TimerOptions): TimerApi {
         lastUpdate: undefined,
     };
 
+    const isFinished = () => {
+        if (options.duration === "infinite") {
+            return false;
+        }
+        return state.time >= options.duration;
+    };
+
     const play = () => {
         const wasPlaying = state.isPlaying;
         state.isPlaying = true;
         state.lastUpdate = undefined;
         state.timeout !== undefined && clearTimeout(state.timeout);
-        state.timeout = createTimeout();
+        if (!isFinished()) {
+            state.timeout = createTimeout();
+        }
         return state.isPlaying !== wasPlaying;
     };
 
@@ -97,7 +106,7 @@ export function createTimer(opts?: TimerOptions): TimerApi {
         subscribe,
     };
 
-    update = () => {
+    const updateTime = () => {
         const lastUpdate = state.lastUpdate ?? new Date().getTime();
         const now = new Date().getTime();
         const diff = now - lastUpdate;
@@ -106,8 +115,16 @@ export function createTimer(opts?: TimerOptions): TimerApi {
         console.log(`Update! ${state.time}`);
 
         state.lastUpdate = now;
+    };
 
-        state.timeout = createTimeout();
+    update = () => {
+        updateTime();
+
+        if (isFinished()) {
+            // do something probably...
+        } else {
+            state.timeout = createTimeout();
+        }
     };
 
     return api;
