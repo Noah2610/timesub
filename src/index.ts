@@ -3,7 +3,7 @@ export interface TimerState {
     isPlaying: boolean;
 
     timeout: NodeJS.Timeout | undefined;
-    lastUpdate: Date | undefined;
+    lastUpdate: number | undefined;
 }
 
 export interface TimerApi {
@@ -54,6 +54,7 @@ export function createTimer(opts?: TimerOptions): TimerApi {
     const play = () => {
         const wasPlaying = state.isPlaying;
         state.isPlaying = true;
+        state.lastUpdate = undefined;
         state.timeout !== undefined && clearTimeout(state.timeout);
         state.timeout = createTimeout();
         return state.isPlaying !== wasPlaying;
@@ -62,6 +63,12 @@ export function createTimer(opts?: TimerOptions): TimerApi {
     const pause = () => {
         const wasPlaying = state.isPlaying;
         state.isPlaying = false;
+
+        if (state.lastUpdate !== undefined) {
+            state.time += new Date().getTime() - state.lastUpdate;
+            state.lastUpdate = undefined;
+        }
+
         state.timeout !== undefined && clearTimeout(state.timeout);
         return state.isPlaying !== wasPlaying;
     };
@@ -91,10 +98,10 @@ export function createTimer(opts?: TimerOptions): TimerApi {
     };
 
     update = () => {
-        const lastUpdate = state.lastUpdate ?? new Date();
-        const now = new Date();
-        const diff = now.getTime() - lastUpdate.getTime();
-        state.time = state.time + diff;
+        const lastUpdate = state.lastUpdate ?? new Date().getTime();
+        const now = new Date().getTime();
+        const diff = now - lastUpdate;
+        state.time += diff;
 
         console.log(`Update! ${state.time}`);
 
