@@ -1,6 +1,7 @@
 export interface TimerState {
     time: number;
     isPlaying: boolean;
+    isFinished: boolean;
 }
 
 export interface TimerApi {
@@ -50,6 +51,7 @@ function createState(): TimerState {
     return {
         time: 0.0,
         isPlaying: false,
+        isFinished: false,
     };
 }
 
@@ -65,17 +67,10 @@ function createInternalState(): TimerInternalState {
 function createApi(state: TimerState, options: TimerOptions): TimerApi {
     const createTimeout = () => setTimeout(update, options.updateInterval);
 
-    const isFinished = () => {
-        if (options.duration === "infinite") {
-            return false;
-        }
-        return state.time >= options.duration;
-    };
-
     const internalState = createInternalState();
 
     const play = () => {
-        if (state.isPlaying || isFinished()) {
+        if (state.isPlaying || state.isFinished) {
             return false;
         }
 
@@ -90,7 +85,7 @@ function createApi(state: TimerState, options: TimerOptions): TimerApi {
     };
 
     const pause = () => {
-        if (!state.isPlaying) {
+        if (!state.isPlaying || state.isFinished) {
             return false;
         }
 
@@ -132,9 +127,13 @@ function createApi(state: TimerState, options: TimerOptions): TimerApi {
         subscribe,
     };
 
-    const updateSubscribers = () => {
-        for (const subscriber of Object.values(internalState.subscribers)) {
-            subscriber(state, api);
+    const update = () => {
+        updateTime();
+        updateIsFinished();
+        updateSubscribers();
+
+        if (!state.isFinished) {
+            internalState.timeout = createTimeout();
         }
     };
 
@@ -147,14 +146,16 @@ function createApi(state: TimerState, options: TimerOptions): TimerApi {
         internalState.lastUpdate = now;
     };
 
-    const update = () => {
-        updateTime();
-        updateSubscribers();
+    const updateIsFinished = () => {
+        if (options.duration === "infinite") {
+            state.isFinished = false;
+        }
+        state.isFinished = state.time >= options.duration;
+    };
 
-        if (isFinished()) {
-            // do something probably...
-        } else {
-            internalState.timeout = createTimeout();
+    const updateSubscribers = () => {
+        for (const subscriber of Object.values(internalState.subscribers)) {
+            subscriber(state, api);
         }
     };
 
