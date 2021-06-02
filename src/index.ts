@@ -208,6 +208,7 @@ export function createTimer(opts?: Partial<TimerOptions>): Timer {
         internalState.lastUpdate = undefined;
         timer.time = time;
         updateSubscribers({ type: "setTime" });
+        update();
     };
 
     const getIsPlaying = () => timer.isPlaying;
