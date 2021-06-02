@@ -11,6 +11,7 @@ export interface TimerApi {
     setTime(time: number): void;
     play(): boolean;
     pause(): boolean;
+    togglePlay(): boolean;
     isPlaying(): boolean;
     subscribe: TimerApiSubscribe;
 }
@@ -50,37 +51,43 @@ export function createTimer(opts?: TimerOptions): TimerApi {
         lastUpdate: undefined,
     };
 
+    const play = () => {
+        const wasPlaying = state.isPlaying;
+        state.isPlaying = true;
+        state.timeout !== undefined && clearTimeout(state.timeout);
+        state.timeout = createTimeout();
+        return state.isPlaying !== wasPlaying;
+    };
+
+    const pause = () => {
+        const wasPlaying = state.isPlaying;
+        state.isPlaying = false;
+        state.timeout !== undefined && clearTimeout(state.timeout);
+        return state.isPlaying !== wasPlaying;
+    };
+
+    const togglePlay = () => (state.isPlaying ? pause() : play());
+
+    const getTime = () => {
+        return state.time;
+    };
+
+    const setTime = (time: number) => {
+        state.time = time;
+    };
+
+    const isPlaying = () => state.isPlaying;
+
+    const subscribe: TimerApiSubscribe = (_) => () => {};
+
     const api: TimerApi = {
-        getTime() {
-            return state.time;
-        },
-
-        setTime(time) {
-            state.time = time;
-        },
-
-        play() {
-            const wasPlaying = state.isPlaying;
-            state.isPlaying = true;
-            state.timeout !== undefined && clearTimeout(state.timeout);
-            state.timeout = createTimeout();
-            return state.isPlaying !== wasPlaying;
-        },
-
-        pause() {
-            const wasPlaying = state.isPlaying;
-            state.isPlaying = false;
-            state.timeout !== undefined && clearTimeout(state.timeout);
-            return state.isPlaying !== wasPlaying;
-        },
-
-        isPlaying() {
-            return state.isPlaying;
-        },
-
-        subscribe(_) {
-            return () => {};
-        },
+        getTime,
+        setTime,
+        play,
+        pause,
+        togglePlay,
+        isPlaying,
+        subscribe,
     };
 
     update = () => {
