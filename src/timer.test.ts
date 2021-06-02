@@ -31,6 +31,9 @@ describe("timer API", () => {
 
         timer.pause();
         expect(timer.isPlaying).toBe(false);
+
+        timer.togglePlay();
+        expect(timer.isPlaying).toBe(true);
     });
 
     it("gets and sets time with API", () => {
@@ -39,5 +42,8 @@ describe("timer API", () => {
 
         timer.setTime(10000);
         expect(timer.getTime()).toBe(10000);
+
+        timer.reset();
+        expect(timer.time).toBe(0.0);
     });
 });
