@@ -1,9 +1,6 @@
 export interface TimerState {
     time: number;
     isPlaying: boolean;
-
-    timeout: NodeJS.Timeout | undefined;
-    lastUpdate: number | undefined;
 }
 
 export interface TimerApi {
@@ -16,9 +13,9 @@ export interface TimerApi {
     subscribe: TimerApiSubscribe;
 }
 
-type TimerApiSubscribe = (cb: TimerSubscriber) => () => void;
+export type TimerApiSubscribe = (cb: TimerSubscriber) => () => void;
 
-type TimerSubscriber = (state: TimerState, api: TimerApi) => void;
+export type TimerSubscriber = (state: TimerState, api: TimerApi) => void;
 
 export interface TimerOptions {
     duration: number | "infinite";
@@ -36,24 +33,35 @@ export function createTimer(opts?: Partial<TimerOptions>): TimerApi {
         ...opts,
     };
 
-    const state = createState();
-
-    const api = createApi(state, options);
+    const [state, internalState] = createState();
+    const api = createApi(state, internalState, options);
 
     return api;
 }
 
-function createState(): TimerState {
-    return {
-        time: 0.0,
-        isPlaying: false,
-
-        timeout: undefined,
-        lastUpdate: undefined,
-    };
+interface InternalTimerState {
+    timeout: NodeJS.Timeout | undefined;
+    lastUpdate: number | undefined;
 }
 
-function createApi(state: TimerState, options: TimerOptions): TimerApi {
+function createState(): [TimerState, InternalTimerState] {
+    return [
+        {
+            time: 0.0,
+            isPlaying: false,
+        },
+        {
+            timeout: undefined,
+            lastUpdate: undefined,
+        },
+    ];
+}
+
+function createApi(
+    state: TimerState,
+    internalState: InternalTimerState,
+    options: TimerOptions,
+): TimerApi {
     const createTimeout = () => setTimeout(update, options.updateInterval);
 
     const isFinished = () => {
@@ -71,10 +79,11 @@ function createApi(state: TimerState, options: TimerOptions): TimerApi {
         }
 
         state.isPlaying = true;
-        state.timeout !== undefined && clearTimeout(state.timeout);
+        internalState.timeout !== undefined &&
+            clearTimeout(internalState.timeout);
         updateTime();
         updateSubscribers();
-        state.timeout = createTimeout();
+        internalState.timeout = createTimeout();
 
         return true;
     };
@@ -85,10 +94,11 @@ function createApi(state: TimerState, options: TimerOptions): TimerApi {
         }
 
         state.isPlaying = false;
-        state.timeout !== undefined && clearTimeout(state.timeout);
+        internalState.timeout !== undefined &&
+            clearTimeout(internalState.timeout);
         updateTime();
         updateSubscribers();
-        state.lastUpdate = undefined;
+        internalState.lastUpdate = undefined;
 
         return true;
     };
@@ -128,12 +138,12 @@ function createApi(state: TimerState, options: TimerOptions): TimerApi {
     };
 
     const updateTime = () => {
-        const lastUpdate = state.lastUpdate ?? new Date().getTime();
+        const lastUpdate = internalState.lastUpdate ?? new Date().getTime();
         const now = new Date().getTime();
         const diff = now - lastUpdate;
         state.time += diff;
 
-        state.lastUpdate = now;
+        internalState.lastUpdate = now;
     };
 
     const update = () => {
@@ -144,7 +154,7 @@ function createApi(state: TimerState, options: TimerOptions): TimerApi {
         if (isFinished()) {
             // do something probably...
         } else {
-            state.timeout = createTimeout();
+            internalState.timeout = createTimeout();
         }
     };
 
