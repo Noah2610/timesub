@@ -16,9 +16,9 @@ export interface TimerApi {
     subscribe: TimerApiSubscribe;
 }
 
-type TimerApiSubscribe = (
-    cb: (stateAndApi: TimerState & TimerApi) => void,
-) => () => void;
+type TimerApiSubscribe = (cb: TimerSubscriber) => () => void;
+
+type TimerSubscriber = (state: TimerState, api: TimerApi) => void;
 
 export interface TimerOptions {
     duration: number | "infinite";
@@ -68,36 +68,21 @@ function createApi(state: TimerState, options: TimerOptions): TimerApi {
         return state.time >= options.duration;
     };
 
-    const updateTime = () => {
-        const lastUpdate = state.lastUpdate ?? new Date().getTime();
-        const now = new Date().getTime();
-        const diff = now - lastUpdate;
-        state.time += diff;
-
-        console.log(`Update! ${state.time}`);
-
-        state.lastUpdate = now;
-    };
-
-    update = () => {
-        updateTime();
-
-        if (isFinished()) {
-            // do something probably...
-        } else {
-            state.timeout = createTimeout();
-        }
-    };
+    const subscribers: TimerSubscriber[] = [];
 
     const play = () => {
         const wasPlaying = state.isPlaying;
         state.isPlaying = true;
         state.lastUpdate = undefined;
         state.timeout !== undefined && clearTimeout(state.timeout);
+
         if (!isFinished()) {
             state.timeout = createTimeout();
         }
-        return state.isPlaying !== wasPlaying;
+
+        const didChange = state.isPlaying !== wasPlaying;
+        didChange && updateSubscribers();
+        return didChange;
     };
 
     const pause = () => {
@@ -110,6 +95,9 @@ function createApi(state: TimerState, options: TimerOptions): TimerApi {
         }
 
         state.timeout !== undefined && clearTimeout(state.timeout);
+
+        const didChange = state.isPlaying !== wasPlaying;
+        didChange && updateSubscribers();
         return state.isPlaying !== wasPlaying;
     };
 
@@ -125,9 +113,13 @@ function createApi(state: TimerState, options: TimerOptions): TimerApi {
 
     const isPlaying = () => state.isPlaying;
 
-    const subscribe: TimerApiSubscribe = (_) => () => {};
+    const subscribe: TimerApiSubscribe = (subscriber) => {
+        subscribers.push(subscriber);
+        const idx = subscribers.length - 1;
+        return () => subscribers.splice(idx, 1);
+    };
 
-    return {
+    const api: TimerApi = {
         getTime,
         setTime,
         play,
@@ -136,4 +128,32 @@ function createApi(state: TimerState, options: TimerOptions): TimerApi {
         isPlaying,
         subscribe,
     };
+
+    const updateSubscribers = () => {
+        for (const subscriber of subscribers) {
+            subscriber(state, api);
+        }
+    };
+
+    const updateTime = () => {
+        const lastUpdate = state.lastUpdate ?? new Date().getTime();
+        const now = new Date().getTime();
+        const diff = now - lastUpdate;
+        state.time += diff;
+
+        state.lastUpdate = now;
+    };
+
+    update = () => {
+        updateTime();
+        updateSubscribers();
+
+        if (isFinished()) {
+            // do something probably...
+        } else {
+            state.timeout = createTimeout();
+        }
+    };
+
+    return api;
 }
