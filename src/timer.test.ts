@@ -53,12 +53,14 @@ describe("subscribe to timer", () => {
         const timer = createTimer();
 
         const callback = jest.fn((_: Timer) => {});
-        timer.subscribe(callback);
+        const unsubscribe = timer.subscribe(callback);
 
         timer.play();
         timer.pause();
 
         expect(callback).toHaveBeenCalledTimes(2);
+
+        unsubscribe();
     });
 
     it("subscribes and unsubscribes", () => {
@@ -73,28 +75,30 @@ describe("subscribe to timer", () => {
         unsubscribe();
         timer.pause();
         expect(callback).toHaveBeenCalledTimes(1);
-    }),
-        it("finishes timer", (done) => {
-            const timer = createTimer({
-                duration: 100,
-                updateInterval: 50,
-            });
+    });
 
-            const expectedTimesCalled = 3;
-            let timesCalled = 0;
+    it("finishes timer", (done) => {
+        const timer = createTimer({
+            duration: 100,
+            updateInterval: 50,
+        });
 
-            const callback = jest.fn(({ isPlaying }: Timer) => {
-                timesCalled++;
-                const expectedIsPlaying =
-                    timesCalled < expectedTimesCalled ? true : false;
-                expect(isPlaying).toBe(expectedIsPlaying);
-                if (timesCalled === expectedTimesCalled) {
-                    expect(callback).toHaveBeenCalledTimes(expectedTimesCalled);
-                    done();
-                }
-            });
-            timer.subscribe(callback);
+        const expectedTimesCalled = 3;
+        let timesCalled = 0;
 
-            timer.play();
-        }, 300);
+        const callback = jest.fn(({ isPlaying }: Timer) => {
+            timesCalled++;
+            const expectedIsPlaying =
+                timesCalled < expectedTimesCalled ? true : false;
+            expect(isPlaying).toBe(expectedIsPlaying);
+            if (timesCalled === expectedTimesCalled) {
+                expect(callback).toHaveBeenCalledTimes(expectedTimesCalled);
+                unsubscribe();
+                done();
+            }
+        });
+        const unsubscribe = timer.subscribe(callback);
+
+        timer.play();
+    });
 });
