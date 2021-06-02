@@ -54,12 +54,7 @@ function createState(): TimerState {
 }
 
 function createApi(state: TimerState, options: TimerOptions): TimerApi {
-    let update = () => {};
-    // Note, that we wrap our `update` function call in another anonymous
-    // function on purpose here. This allows us to overwrite the update
-    // function later, and our interval will still use the new update function.
-    const createTimeout = () =>
-        setTimeout(() => update(), options.updateInterval);
+    const createTimeout = () => setTimeout(update, options.updateInterval);
 
     const isFinished = () => {
         if (options.duration === "infinite") {
@@ -71,34 +66,31 @@ function createApi(state: TimerState, options: TimerOptions): TimerApi {
     const subscribers: TimerSubscriber[] = [];
 
     const play = () => {
-        const wasPlaying = state.isPlaying;
-        state.isPlaying = true;
-        state.lastUpdate = undefined;
-        state.timeout !== undefined && clearTimeout(state.timeout);
-
-        if (!isFinished()) {
-            state.timeout = createTimeout();
+        if (state.isPlaying || isFinished()) {
+            return false;
         }
 
-        const didChange = state.isPlaying !== wasPlaying;
-        didChange && updateSubscribers();
-        return didChange;
+        state.isPlaying = true;
+        state.timeout !== undefined && clearTimeout(state.timeout);
+        updateTime();
+        updateSubscribers();
+        state.timeout = createTimeout();
+
+        return true;
     };
 
     const pause = () => {
-        const wasPlaying = state.isPlaying;
-        state.isPlaying = false;
-
-        if (state.lastUpdate !== undefined) {
-            state.time += new Date().getTime() - state.lastUpdate;
-            state.lastUpdate = undefined;
+        if (!state.isPlaying) {
+            return false;
         }
 
+        state.isPlaying = false;
         state.timeout !== undefined && clearTimeout(state.timeout);
+        updateTime();
+        updateSubscribers();
+        state.lastUpdate = undefined;
 
-        const didChange = state.isPlaying !== wasPlaying;
-        didChange && updateSubscribers();
-        return state.isPlaying !== wasPlaying;
+        return true;
     };
 
     const togglePlay = () => (state.isPlaying ? pause() : play());
@@ -144,8 +136,9 @@ function createApi(state: TimerState, options: TimerOptions): TimerApi {
         state.lastUpdate = now;
     };
 
-    update = () => {
+    const update = () => {
         updateTime();
+        console.log(`update: ${state.time}`);
         updateSubscribers();
 
         if (isFinished()) {
