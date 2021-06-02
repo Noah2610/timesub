@@ -1,3 +1,5 @@
+export type Timer = TimerState & TimerApi;
+
 export interface TimerState {
     time: number;
     isPlaying: boolean;
@@ -10,13 +12,13 @@ export interface TimerApi {
     play(): boolean;
     pause(): boolean;
     togglePlay(): boolean;
-    isPlaying(): boolean;
+    getIsPlaying(): boolean;
     subscribe: TimerApiSubscribe;
 }
 
 export type TimerApiSubscribe = (cb: TimerSubscriber) => () => void;
 
-export type TimerSubscriber = (state: TimerState, api: TimerApi) => void;
+export type TimerSubscriber = (timer: Timer) => void;
 
 export interface TimerOptions {
     duration: number | "infinite";
@@ -28,7 +30,7 @@ const DEFAULT_TIMER_OPTIONS: TimerOptions = {
     updateInterval: 100,
 };
 
-export function createTimer(opts?: Partial<TimerOptions>): TimerApi {
+export function createTimer(opts?: Partial<TimerOptions>): Timer {
     const options = {
         ...DEFAULT_TIMER_OPTIONS,
         ...opts,
@@ -37,7 +39,10 @@ export function createTimer(opts?: Partial<TimerOptions>): TimerApi {
     const state = createState();
     const api = createApi(state, options);
 
-    return api;
+    return {
+        ...state,
+        ...api,
+    };
 }
 
 interface TimerInternalState {
@@ -109,7 +114,7 @@ function createApi(state: TimerState, options: TimerOptions): TimerApi {
         state.time = time;
     };
 
-    const isPlaying = () => state.isPlaying;
+    const getIsPlaying = () => state.isPlaying;
 
     const subscribe: TimerApiSubscribe = (subscriber) => {
         const idx = internalState.nextSubscriberIdx++;
@@ -123,7 +128,7 @@ function createApi(state: TimerState, options: TimerOptions): TimerApi {
         play,
         pause,
         togglePlay,
-        isPlaying,
+        getIsPlaying,
         subscribe,
     };
 
@@ -155,7 +160,10 @@ function createApi(state: TimerState, options: TimerOptions): TimerApi {
 
     const updateSubscribers = () => {
         for (const subscriber of Object.values(internalState.subscribers)) {
-            subscriber(state, api);
+            subscriber({
+                ...state,
+                ...api,
+            });
         }
     };
 
