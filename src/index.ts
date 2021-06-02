@@ -21,21 +21,39 @@ type TimerApiSubscribe = (
 ) => () => void;
 
 export interface TimerOptions {
-    duration?: number | "infinite";
-    updateInterval?: number;
+    duration: number | "infinite";
+    updateInterval: number;
 }
 
-const DEFAULT_TIMER_OPTIONS: Required<TimerOptions> = {
+const DEFAULT_TIMER_OPTIONS: TimerOptions = {
     duration: "infinite",
     updateInterval: 100,
 };
 
-export function createTimer(opts?: TimerOptions): TimerApi {
+export function createTimer(opts?: Partial<TimerOptions>): TimerApi {
     const options = {
         ...DEFAULT_TIMER_OPTIONS,
         ...opts,
     };
 
+    const state = createState();
+
+    const api = createApi(state, options);
+
+    return api;
+}
+
+function createState(): TimerState {
+    return {
+        time: 0.0,
+        isPlaying: false,
+
+        timeout: undefined,
+        lastUpdate: undefined,
+    };
+}
+
+function createApi(state: TimerState, options: TimerOptions): TimerApi {
     let update = () => {};
     // Note, that we wrap our `update` function call in another anonymous
     // function on purpose here. This allows us to overwrite the update
@@ -43,19 +61,32 @@ export function createTimer(opts?: TimerOptions): TimerApi {
     const createTimeout = () =>
         setTimeout(() => update(), options.updateInterval);
 
-    const state: TimerState = {
-        time: 0.0,
-        isPlaying: false,
-
-        timeout: undefined,
-        lastUpdate: undefined,
-    };
-
     const isFinished = () => {
         if (options.duration === "infinite") {
             return false;
         }
         return state.time >= options.duration;
+    };
+
+    const updateTime = () => {
+        const lastUpdate = state.lastUpdate ?? new Date().getTime();
+        const now = new Date().getTime();
+        const diff = now - lastUpdate;
+        state.time += diff;
+
+        console.log(`Update! ${state.time}`);
+
+        state.lastUpdate = now;
+    };
+
+    update = () => {
+        updateTime();
+
+        if (isFinished()) {
+            // do something probably...
+        } else {
+            state.timeout = createTimeout();
+        }
     };
 
     const play = () => {
@@ -96,7 +127,7 @@ export function createTimer(opts?: TimerOptions): TimerApi {
 
     const subscribe: TimerApiSubscribe = (_) => () => {};
 
-    const api: TimerApi = {
+    return {
         getTime,
         setTime,
         play,
@@ -105,27 +136,4 @@ export function createTimer(opts?: TimerOptions): TimerApi {
         isPlaying,
         subscribe,
     };
-
-    const updateTime = () => {
-        const lastUpdate = state.lastUpdate ?? new Date().getTime();
-        const now = new Date().getTime();
-        const diff = now - lastUpdate;
-        state.time += diff;
-
-        console.log(`Update! ${state.time}`);
-
-        state.lastUpdate = now;
-    };
-
-    update = () => {
-        updateTime();
-
-        if (isFinished()) {
-            // do something probably...
-        } else {
-            state.timeout = createTimeout();
-        }
-    };
-
-    return api;
 }
