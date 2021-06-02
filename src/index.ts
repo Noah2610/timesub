@@ -1,18 +1,69 @@
+/**
+ * The Timer context, containing both the state and API functions.
+ */
 export type Timer = TimerState & TimerApi;
 
+/**
+ * Timer state values.
+ */
 export interface TimerState {
+    /**
+     * Current playback time.
+     */
     time: number;
+
+    /**
+     * Current playback status.
+     */
     isPlaying: boolean;
+
+    /**
+     * If you've set a duration, then this could be `true`
+     * if the time has reached the duration.
+     */
     isFinished: boolean;
 }
 
+/**
+ * Timer API functions, to control playback and subscribe to state changes.
+ */
 export interface TimerApi {
+    /**
+     * Get the current time.
+     */
     getTime(): number;
+
+    /**
+     * Set the time to the given `time` in milliseconds.
+     */
     setTime(time: number): void;
+
+    /**
+     * Play the timer, if it's paused.
+     */
     play(): boolean;
+
+    /**
+     * Pause the timer.
+     */
     pause(): boolean;
+
+    /**
+     * Toggle between playing and paused states.
+     */
     togglePlay(): boolean;
+
+    /**
+     * Get playback status.
+     */
     getIsPlaying(): boolean;
+
+    /**
+     * Subscribe to time updates.
+     * The given callback function will be called anytime the state changes.
+     * The callback gets the full `Timer` context as its argument.
+     * Returns a function that can be called to unsubscribe.
+     */
     subscribe: TimerApiSubscribe;
 }
 
@@ -20,8 +71,26 @@ export type TimerApiSubscribe = (cb: TimerSubscriber) => () => void;
 
 export type TimerSubscriber = (timer: Timer) => void;
 
+/**
+ * Options you can pass to the `createTimer` function.
+ */
 export interface TimerOptions {
+    /**
+     * The maximum duration for the timer in milliseconds.
+     * Once the time has reached the duration, the timer will stop.
+     * If "infinite", the timer will never stop on its own.
+     *
+     * Default: "infinite"
+     */
     duration: number | "infinite";
+
+    /**
+     * The delay in milliseconds between every update.
+     * Time itself is always calculated with `Date`, this is just
+     * how often it recalculates and calls all subscriber functions.
+     *
+     * Default: 100
+     */
     updateInterval: number;
 }
 
@@ -37,6 +106,10 @@ const DEFAULT_TIMER_OPTIONS: TimerOptions = {
     updateInterval: 100,
 };
 
+/**
+ * Call this function to initialize a new `Timer`.
+ * Optionally pass an options object. Every options property can be omitted.
+ */
 export function createTimer(opts?: Partial<TimerOptions>): Timer {
     const options = {
         ...DEFAULT_TIMER_OPTIONS,
