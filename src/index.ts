@@ -191,12 +191,12 @@ export function createTimer(opts?: Partial<TimerOptions>): Timer {
     const togglePlay = () => (timer.isPlaying ? timer.pause() : timer.play());
 
     const reset = () => {
-        timer.time = 0;
-        timer.isPlaying = false;
-        timer.isFinished = false;
         internalState.timeout !== undefined &&
             clearTimeout(internalState.timeout);
         internalState.lastUpdate = undefined;
+        timer.time = 0;
+        timer.isPlaying = false;
+        timer.isFinished = false;
         updateSubscribers({ type: "reset" });
     };
 
@@ -223,7 +223,9 @@ export function createTimer(opts?: Partial<TimerOptions>): Timer {
         updateIsFinished();
         updateSubscribers({ type: timer.isFinished ? "finish" : "update" });
 
-        if (!timer.isFinished) {
+        internalState.timeout !== undefined &&
+            clearTimeout(internalState.timeout);
+        if (!timer.isFinished && timer.isPlaying) {
             internalState.timeout = createTimeout();
         }
     };
