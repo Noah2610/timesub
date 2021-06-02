@@ -1,4 +1,4 @@
-import { createTimer, Timer } from ".";
+import { createTimer, Timer, TimerEvent } from ".";
 
 describe("createTimer", () => {
     it("creates a timer", () => {
@@ -97,8 +97,37 @@ describe("subscribe to timer", () => {
                 done();
             }
         });
-        const unsubscribe = timer.subscribe(callback);
 
+        const unsubscribe = timer.subscribe(callback);
+        timer.play();
+    });
+
+    it("finishes timer with event", (done) => {
+        const timer = createTimer({
+            duration: 100,
+            updateInterval: 50,
+        });
+
+        const callback = jest.fn(
+            ({ isPlaying, isFinished }: Timer, event: TimerEvent) => {
+                switch (event.type) {
+                    case "update": {
+                        expect(isPlaying).toBe(true);
+                        expect(isFinished).toBe(false);
+                        break;
+                    }
+                    case "finish": {
+                        expect(isPlaying).toBe(false);
+                        expect(isFinished).toBe(true);
+                        expect(callback).toHaveBeenCalledTimes(3);
+                        unsubscribe();
+                        done();
+                    }
+                }
+            },
+        );
+
+        const unsubscribe = timer.subscribe(callback);
         timer.play();
     });
 });
