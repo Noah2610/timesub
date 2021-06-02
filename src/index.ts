@@ -67,7 +67,10 @@ export interface TimerApi {
     /**
      * Subscribe to time updates.
      * The given callback function will be called anytime the state changes.
-     * The callback gets the full `Timer` context as its argument.
+     * The callback gets two arguments:
+     *   1. The `Timer` context, including state and API functions,
+     *   2. An `TimerEvent` object, that contains a `type` property,
+     *      informing what caused the update.
      * Returns a function that can be called to unsubscribe.
      */
     subscribe: TimerApiSubscribe;
@@ -77,22 +80,31 @@ export type TimerApiSubscribe = (cb: TimerSubscriber) => () => void;
 
 export type TimerSubscriber = (timer: Timer, event: TimerEvent) => void;
 
+/**
+ * An object passed as the second argument to a subscriber callback.
+ */
 export type TimerEvent =
+    /** When the `play()` function triggered the update. */
     | {
           type: "play";
       }
+    /** When the `pause()` function triggered the update. */
     | {
           type: "pause";
       }
+    /** When the `setTime()` function triggered the update. */
     | {
           type: "setTime";
       }
+    /** When the `reset()` function triggered the update. */
     | {
           type: "reset";
       }
+    /** When it's updated by the interval. */
     | {
           type: "update";
       }
+    /** When the timer finishes. */
     | {
           type: "finish";
       };
