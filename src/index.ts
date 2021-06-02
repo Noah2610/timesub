@@ -75,7 +75,27 @@ export interface TimerApi {
 
 export type TimerApiSubscribe = (cb: TimerSubscriber) => () => void;
 
-export type TimerSubscriber = (timer: Timer) => void;
+export type TimerSubscriber = (timer: Timer, event: TimerEvent) => void;
+
+export type TimerEvent =
+    | {
+          type: "play";
+      }
+    | {
+          type: "pause";
+      }
+    | {
+          type: "setTime";
+      }
+    | {
+          type: "reset";
+      }
+    | {
+          type: "update";
+      }
+    | {
+          type: "finish";
+      };
 
 /**
  * Options you can pass to the `createTimer` function.
@@ -134,9 +154,9 @@ export function createTimer(opts?: Partial<TimerOptions>): Timer {
         timer.isPlaying = true;
         internalState.timeout !== undefined &&
             clearTimeout(internalState.timeout);
-        updateTime();
-        updateSubscribers();
         internalState.timeout = createTimeout();
+        updateTime();
+        updateSubscribers({ type: "play" });
 
         return true;
     };
@@ -150,7 +170,7 @@ export function createTimer(opts?: Partial<TimerOptions>): Timer {
         internalState.timeout !== undefined &&
             clearTimeout(internalState.timeout);
         updateTime();
-        updateSubscribers();
+        updateSubscribers({ type: "pause" });
         internalState.lastUpdate = undefined;
 
         return true;
@@ -159,21 +179,23 @@ export function createTimer(opts?: Partial<TimerOptions>): Timer {
     const togglePlay = () => (timer.isPlaying ? timer.pause() : timer.play());
 
     const reset = () => {
-        timer.pause();
-        timer.setTime(0);
-        updateIsFinished();
-        updateSubscribers();
+        timer.time = 0;
+        timer.isPlaying = false;
+        timer.isFinished = false;
         internalState.timeout !== undefined &&
             clearTimeout(internalState.timeout);
         internalState.lastUpdate = undefined;
+        updateSubscribers({ type: "reset" });
     };
 
-    const getTime = () => {
-        return timer.time;
-    };
+    const getTime = () => timer.time;
 
     const setTime = (time: number) => {
+        internalState.timeout !== undefined &&
+            clearTimeout(internalState.timeout);
+        internalState.lastUpdate = undefined;
         timer.time = time;
+        updateSubscribers({ type: "setTime" });
     };
 
     const getIsPlaying = () => timer.isPlaying;
@@ -187,7 +209,7 @@ export function createTimer(opts?: Partial<TimerOptions>): Timer {
     const update = () => {
         updateTime();
         updateIsFinished();
-        updateSubscribers();
+        updateSubscribers({ type: timer.isFinished ? "finish" : "update" });
 
         if (!timer.isFinished) {
             internalState.timeout = createTimeout();
@@ -199,7 +221,6 @@ export function createTimer(opts?: Partial<TimerOptions>): Timer {
         const now = new Date().getTime();
         const diff = now - lastUpdate;
         timer.time += diff;
-
         internalState.lastUpdate = now;
     };
 
@@ -214,9 +235,9 @@ export function createTimer(opts?: Partial<TimerOptions>): Timer {
         }
     };
 
-    const updateSubscribers = () => {
+    const updateSubscribers = (event: TimerEvent) => {
         for (const subscriber of Object.values(internalState.subscribers)) {
-            subscriber(timer);
+            subscriber(timer, event);
         }
     };
 
