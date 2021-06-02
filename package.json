@@ -1,0 +1,15 @@
+{
+    "name": "timesub",
+    "version": "0.0.0",
+    "description": "Simple subscription-based timer",
+    "main": "index.js",
+    "license": "MIT",
+    "scripts": {
+        "build": "tsc",
+        "build:watch": "tsc --watch"
+    },
+    "devDependencies": {
+        "prettier": "^2.3.0",
+        "typescript": "^4.3.2"
+    }
+}

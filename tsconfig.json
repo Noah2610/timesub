@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "AMD",
+        "allowJs": false,
+        "declaration": true,
+        "declarationMap": false,
+        "sourceMap": false,
+        "outFile": "./dist/index.js",
+        "removeComments": false,
+        "strict": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "noUncheckedIndexedAccess": true,
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true
+    },
+    "include": ["src"],
+    "exclude": ["node_modules"]
+}
