@@ -25,6 +25,13 @@ export interface TimerOptions {
     updateInterval: number;
 }
 
+interface TimerInternalState {
+    timeout: NodeJS.Timeout | undefined;
+    lastUpdate: number | undefined;
+    subscribers: Record<number, TimerSubscriber>;
+    nextSubscriberIdx: number;
+}
+
 const DEFAULT_TIMER_OPTIONS: TimerOptions = {
     duration: "infinite",
     updateInterval: 100,
@@ -37,42 +44,9 @@ export function createTimer(opts?: Partial<TimerOptions>): Timer {
     };
 
     const state = createState();
-    const api = createApi(state, options);
-
-    return {
-        ...state,
-        ...api,
-    };
-}
-
-interface TimerInternalState {
-    timeout: NodeJS.Timeout | undefined;
-    lastUpdate: number | undefined;
-    subscribers: Record<number, TimerSubscriber>;
-    nextSubscriberIdx: number;
-}
-
-function createState(): TimerState {
-    return {
-        time: 0.0,
-        isPlaying: false,
-        isFinished: false,
-    };
-}
-
-function createInternalState(): TimerInternalState {
-    return {
-        timeout: undefined,
-        lastUpdate: undefined,
-        subscribers: [],
-        nextSubscriberIdx: 0,
-    };
-}
-
-function createApi(state: TimerState, options: TimerOptions): TimerApi {
-    const createTimeout = () => setTimeout(update, options.updateInterval);
-
     const internalState = createInternalState();
+
+    const createTimeout = () => setTimeout(update, options.updateInterval);
 
     const play = () => {
         if (state.isPlaying || state.isFinished) {
@@ -160,12 +134,31 @@ function createApi(state: TimerState, options: TimerOptions): TimerApi {
 
     const updateSubscribers = () => {
         for (const subscriber of Object.values(internalState.subscribers)) {
-            subscriber({
-                ...state,
-                ...api,
-            });
+            subscriber(timer);
         }
     };
 
-    return api;
+    const timer: Timer = {
+        ...state,
+        ...api,
+    };
+
+    return timer;
+}
+
+function createState(): TimerState {
+    return {
+        time: 0.0,
+        isPlaying: false,
+        isFinished: false,
+    };
+}
+
+function createInternalState(): TimerInternalState {
+    return {
+        timeout: undefined,
+        lastUpdate: undefined,
+        subscribers: [],
+        nextSubscriberIdx: 0,
+    };
 }
