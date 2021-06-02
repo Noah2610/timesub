@@ -204,10 +204,13 @@ export function createTimer(opts?: Partial<TimerOptions>): Timer {
     };
 
     const updateIsFinished = () => {
-        if (options.duration === "infinite") {
-            timer.isFinished = false;
-        } else {
-            timer.isFinished = timer.time >= options.duration;
+        const wasFinished = timer.isFinished;
+        timer.isFinished =
+            options.duration === "infinite"
+                ? false
+                : timer.time >= options.duration;
+        if (timer.isFinished && timer.isFinished !== wasFinished) {
+            timer.isPlaying = false;
         }
     };
 
