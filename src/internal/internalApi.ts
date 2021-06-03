@@ -5,6 +5,7 @@ export interface TimerInternalApi {
     createTimeout(): NodeJS.Timeout;
     update(): void;
     updateTime(): void;
+    updateIsFinished(): void;
     updateSubscribers(event: TimerEvent): void;
 }
 
@@ -49,9 +50,11 @@ export function createInternalApi(
     };
 
     const update = () => {
-        updateTime();
-        updateIsFinished();
-        updateSubscribers({ type: state.isFinished ? "finish" : "update" });
+        internalApi.updateTime();
+        internalApi.updateIsFinished();
+        internalApi.updateSubscribers({
+            type: state.isFinished ? "finish" : "update",
+        });
 
         internalState.timeout !== undefined &&
             clearTimeout(internalState.timeout);
@@ -63,6 +66,7 @@ export function createInternalApi(
     const internalApi: TimerInternalApi = {
         createTimeout,
         update,
+        updateIsFinished,
         updateTime,
         updateSubscribers,
     };
