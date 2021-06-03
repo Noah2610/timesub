@@ -2,7 +2,8 @@ import { TimerEvent, TimerOptions, TimerState } from "../types";
 import { TimerInternalState } from "./internalState";
 
 export interface TimerInternalApi {
-    createTimeout(): NodeJS.Timeout;
+    startTimeout(): void;
+    stopTimeout(): void;
     update(): void;
     updateTime(): void;
     updateIsFinished(): void;
@@ -14,7 +15,17 @@ export function createInternalApi(
     internalState: TimerInternalState,
     options: TimerOptions,
 ): TimerInternalApi {
-    const createTimeout = () => setTimeout(update, options.updateInterval);
+    const startTimeout = () => {
+        internalApi.stopTimeout();
+        internalState.timeout = setTimeout(update, options.updateInterval);
+    };
+
+    const stopTimeout = () => {
+        if (internalState.timeout !== undefined) {
+            clearTimeout(internalState.timeout);
+            internalState.timeout = undefined;
+        }
+    };
 
     const updateTime = () => {
         const lastUpdate = internalState.lastUpdate ?? new Date().getTime();
@@ -56,15 +67,15 @@ export function createInternalApi(
             type: state.isFinished ? "finish" : "update",
         });
 
-        internalState.timeout !== undefined &&
-            clearTimeout(internalState.timeout);
+        internalApi.stopTimeout();
         if (!state.isFinished && state.isPlaying) {
-            internalState.timeout = internalApi.createTimeout();
+            internalApi.startTimeout();
         }
     };
 
     const internalApi: TimerInternalApi = {
-        createTimeout,
+        startTimeout,
+        stopTimeout,
         update,
         updateIsFinished,
         updateTime,

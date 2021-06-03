@@ -57,15 +57,13 @@ type CreateApiFn<T extends keyof TimerApi, TParams = undefined> =
           ) => TimerApi[T];
 
 const createApiPlay: CreateApiFn<"play"> =
-    (state, internalState, internalApi) => () => {
+    (state, _internalState, internalApi) => () => {
         if (state.isPlaying || state.isFinished) {
             return false;
         }
 
         state.isPlaying = true;
-        internalState.timeout !== undefined &&
-            clearTimeout(internalState.timeout);
-        internalState.timeout = internalApi.createTimeout();
+        internalApi.startTimeout();
         internalApi.updateTime();
         internalApi.updateSubscribers({ type: "play" });
 
@@ -79,8 +77,7 @@ const createApiPause: CreateApiFn<"pause"> =
         }
 
         state.isPlaying = false;
-        internalState.timeout !== undefined &&
-            clearTimeout(internalState.timeout);
+        internalApi.stopTimeout();
         internalApi.updateTime();
         internalApi.updateSubscribers({ type: "pause" });
         internalState.lastUpdate = undefined;
@@ -98,8 +95,7 @@ const createApiTogglePlay: CreateApiFn<
 
 const createApiReset: CreateApiFn<"reset"> =
     (state, internalState, internalApi) => () => {
-        internalState.timeout !== undefined &&
-            clearTimeout(internalState.timeout);
+        internalApi.stopTimeout();
         internalState.lastUpdate = undefined;
         state.time = 0;
         state.isPlaying = false;
@@ -113,8 +109,7 @@ const createApiGetTime: CreateApiFn<"getTime"> =
 
 const createApiSetTime: CreateApiFn<"setTime"> =
     (state, internalState, internalApi) => (time) => {
-        internalState.timeout !== undefined &&
-            clearTimeout(internalState.timeout);
+        internalApi.stopTimeout();
         internalState.lastUpdate = undefined;
         state.time = time;
         internalApi.updateSubscribers({ type: "setTime" });
