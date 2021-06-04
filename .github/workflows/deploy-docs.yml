@@ -18,6 +18,10 @@ jobs:
               run: yarn install
             - name: Build docs
               run: yarn run docs
+            - name: Update version list in docs/index.html
+              run: |
+                  cd ./docs && \
+                  sed -Ei "s/\{\{\s*VERSIONS\s*\}\}/$( ls -dx v* )/" ./index.html
             - name: Deploy docs
               uses: peaceiris/actions-gh-pages@v3
               with:
