@@ -29,16 +29,6 @@ export interface TimerState {
  */
 export interface TimerApi {
     /**
-     * Get the current time.
-     */
-    getTime(): Time;
-
-    /**
-     * Set the time to the given `time` in milliseconds.
-     */
-    setTime(time: Time): void;
-
-    /**
      * Play the timer, if it's paused.
      */
     play(): boolean;
@@ -60,6 +50,16 @@ export interface TimerApi {
     reset(): void;
 
     /**
+     * Get the current time.
+     */
+    getTime(): Time;
+
+    /**
+     * Set the time to the given `time` in milliseconds.
+     */
+    setTime(time: Time): void;
+
+    /**
      * Get playback status.
      */
     getIsPlaying(): boolean;
@@ -69,7 +69,7 @@ export interface TimerApi {
      * The given callback function will be called anytime the state changes.
      * The callback gets two arguments:
      *   1. The `Timer` context, including state and API functions,
-     *   2. An `TimerEvent` object, that contains a `type` property,
+     *   2. A `TimerEvent` object, that contains a `type` property,
      *      informing what caused the update.
      * Returns a function that can be called to unsubscribe.
      */

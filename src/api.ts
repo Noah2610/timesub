@@ -32,9 +32,9 @@ export function createApi(
         play,
         pause,
         togglePlay,
+        reset,
         getTime,
         setTime,
-        reset,
         getIsPlaying,
         subscribe,
     };
