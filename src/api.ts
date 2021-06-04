@@ -1,4 +1,4 @@
-import { TimerApi, TimerOptions, TimerState } from "./types";
+import { TimerApi, TimerState } from "./types";
 import {
     createInternalApi,
     TimerInternalApi,
@@ -8,9 +8,8 @@ import {
 export function createApi(
     state: TimerState,
     internalState: TimerInternalState,
-    options: TimerOptions,
 ): TimerApi {
-    const internalApi = createInternalApi(state, internalState, options);
+    const internalApi = createInternalApi(state, internalState);
 
     const play = createApiPlay(state, internalState, internalApi);
     const pause = createApiPause(state, internalState, internalApi);
@@ -27,6 +26,12 @@ export function createApi(
         internalApi,
     );
     const subscribe = createApiSubscribe(state, internalState, internalApi);
+    const setDuration = createApiSetDuration(state, internalState, internalApi);
+    const setUpdateInterval = createApiSetUpdateInterval(
+        state,
+        internalState,
+        internalApi,
+    );
 
     const api: TimerApi = {
         play,
@@ -37,6 +42,8 @@ export function createApi(
         setTime,
         getIsPlaying,
         subscribe,
+        setDuration,
+        setUpdateInterval,
     };
 
     return api;
@@ -132,4 +139,14 @@ const createApiSubscribe: CreateApiFn<"subscribe"> =
         const idx = internalState.nextSubscriberIdx++;
         internalState.subscribers[idx] = subscriber;
         return () => delete internalState.subscribers[idx];
+    };
+
+const createApiSetDuration: CreateApiFn<"setDuration"> =
+    (_state, internalState, _internalApi) => (duration) => {
+        internalState.options.duration = duration;
+    };
+
+const createApiSetUpdateInterval: CreateApiFn<"setUpdateInterval"> =
+    (_state, internalState, _internalApi) => (updateInterval) => {
+        internalState.options.updateInterval = updateInterval;
     };

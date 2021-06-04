@@ -74,6 +74,18 @@ export interface TimerApi {
      * Returns a function that can be called to unsubscribe.
      */
     subscribe(cb: TimerSubscriber): () => void;
+
+    /**
+     * Set a new duration for the timer.
+     * The duration is the max time before the timer finishes.
+     */
+    setDuration(duration: Time): void;
+
+    /**
+     * Set a new update interval for the timer.
+     * This is the delay time in milliseconds between every time update.
+     */
+    setUpdateInterval(updateInterval: Time): void;
 }
 
 export type TimerApiSubscribe = TimerApi["subscribe"];

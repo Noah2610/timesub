@@ -20,8 +20,8 @@ export function createTimer(opts?: Partial<TimerOptions>): Timer {
     };
 
     const state = createState();
-    const internalState = createInternalState();
-    const api = createApi(state, internalState, options);
+    const internalState = createInternalState(options);
+    const api = createApi(state, internalState);
 
     // Note:
     // This `Object.assign` is very important!
