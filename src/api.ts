@@ -154,15 +154,19 @@ const createApiGetDuration: CreateApiFn<"getDuration"> =
         internalState.options.duration;
 
 const createApiSetDuration: CreateApiFn<"setDuration"> =
-    (_state, internalState, _internalApi) => (duration) => {
+    (_state, internalState, internalApi) => (duration) => {
         internalState.options.duration = duration;
-    };
-
-const createApiSetUpdateInterval: CreateApiFn<"setUpdateInterval"> =
-    (_state, internalState, _internalApi) => (updateInterval) => {
-        internalState.options.updateInterval = updateInterval;
+        // Update to reflect changes immediately
+        internalApi.update();
     };
 
 const createApiGetUpdateInterval: CreateApiFn<"getUpdateInterval"> =
     (_state, internalState, _internalApi) => () =>
         internalState.options.updateInterval;
+
+const createApiSetUpdateInterval: CreateApiFn<"setUpdateInterval"> =
+    (_state, internalState, internalApi) => (updateInterval) => {
+        internalState.options.updateInterval = updateInterval;
+        // Update to reflect changes immediately
+        internalApi.update();
+    };

@@ -30,16 +30,19 @@ export interface TimerState {
 export interface TimerApi {
     /**
      * Play the timer, if it's paused.
+     * Returns `true` if it started playing because of this call.
      */
     play(): boolean;
 
     /**
      * Pause the timer.
+     * Returns `true` if it got paused because of this call.
      */
     pause(): boolean;
 
     /**
      * Toggle between playing and paused states.
+     * Returns `true` if it successfully toggled play states.
      */
     togglePlay(): boolean;
 
