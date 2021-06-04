@@ -56,7 +56,7 @@
             }
 
             var versionsEl = document.querySelector(".versions");
-            var versions = versionsEl.getAttribute("data-versions").split("\t");
+            var versions = versionsEl.getAttribute("data-versions").split(",");
             var latestVersion = versions[versions.length - 1];
 
             addVersion(latestVersion, "latest");

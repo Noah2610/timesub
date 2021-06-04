@@ -34,7 +34,7 @@ jobs:
               with:
                   ref: docs
             - name: Update version list in docs/index.html
-              run: sed -Ei "s/\{\{\s*VERSIONS\s*\}\}/$( ls -dx v* )/" ./index.html
+              run: sed -Ei "s/\{\{\s*VERSIONS\s*\}\}/$( ls -d1 v* | paste -sd ',' )/" ./index.html
             - name: Push to branch
               run: |
                   git config user.name github-actions
