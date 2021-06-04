@@ -1,12 +1,19 @@
 {
     "name": "timesub",
-    "version": "0.0.0-test-1",
+    "version": "0.0.0",
     "description": "Simple subscription-based timer",
     "main": "index.js",
     "license": "MIT",
+    "keywords": [
+        "timer"
+    ],
+    "homepage": "https://github.com/Noah2610/timesub",
+    "repository": "github:Noah2610/timesub",
     "scripts": {
-        "build": "tsc && cp ./package.json ./dist/package.json",
+        "build": "tsc",
         "build:watch": "tsc --watch",
+        "prebuild": "rm -rf ./dist",
+        "postbuild": "cp ./README.md ./LICENSE ./package.json ./dist",
         "test": "jest",
         "test:watch": "jest --watch",
         "docs": "typedoc ./src/index.ts --out ./docs/v${npm_package_version} --theme minimal --includeVersion"
