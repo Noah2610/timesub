@@ -46,6 +46,29 @@ describe("timer API", () => {
         timer.reset();
         expect(timer.time).toBe(0.0);
     });
+
+    it("gets and sets duration", () => {
+        const timer = createTimer({
+            duration: 1000,
+        });
+        expect(timer.getDuration()).toBe(1000);
+
+        timer.setDuration(500);
+        expect(timer.getDuration()).toBe(500);
+
+        timer.setDuration("infinite");
+        expect(timer.getDuration()).toBe("infinite");
+    });
+
+    it("gets and sets updateInterval", () => {
+        const timer = createTimer({
+            updateInterval: 50,
+        });
+        expect(timer.getUpdateInterval()).toBe(50);
+
+        timer.setUpdateInterval(200);
+        expect(timer.getUpdateInterval()).toBe(200);
+    });
 });
 
 describe("subscribe to timer", () => {
