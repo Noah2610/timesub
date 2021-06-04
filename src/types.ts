@@ -10,7 +10,7 @@ export interface TimerState {
     /**
      * Current playback time.
      */
-    time: number;
+    time: Time;
 
     /**
      * Current playback status.
@@ -31,12 +31,12 @@ export interface TimerApi {
     /**
      * Get the current time.
      */
-    getTime(): number;
+    getTime(): Time;
 
     /**
      * Set the time to the given `time` in milliseconds.
      */
-    setTime(time: number): void;
+    setTime(time: Time): void;
 
     /**
      * Play the timer, if it's paused.
@@ -92,9 +92,13 @@ export type TimerEvent =
     | {
           type: "pause";
       }
-    /** When the `setTime()` function triggered the update. */
+    /**
+     * When the `setTime()` function triggered the update.
+     * Also gets the target `time`, used with the `setTime` call.
+     * */
     | {
           type: "setTime";
+          time: Time;
       }
     /** When the `reset()` function triggered the update. */
     | {
@@ -120,7 +124,7 @@ export interface TimerOptions {
      *
      * Default: "infinite"
      */
-    duration: number | "infinite";
+    duration: Time | "infinite";
 
     /**
      * The delay in milliseconds between every update.
@@ -129,5 +133,11 @@ export interface TimerOptions {
      *
      * Default: 100
      */
-    updateInterval: number;
+    updateInterval: Time;
 }
+
+/**
+ * Wrapper type for time representation.
+ * Just a number in milliseconds.
+ */
+export type Time = number;
