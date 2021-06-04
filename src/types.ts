@@ -1,7 +1,7 @@
 /**
  * The Timer context, containing both the state and API functions.
  */
-export type Timer = TimerState & TimerApi;
+export interface Timer extends TimerState, TimerApi {}
 
 /**
  * Timer state values.
@@ -73,10 +73,10 @@ export interface TimerApi {
      *      informing what caused the update.
      * Returns a function that can be called to unsubscribe.
      */
-    subscribe: TimerApiSubscribe;
+    subscribe(cb: TimerSubscriber): () => void;
 }
 
-export type TimerApiSubscribe = (cb: TimerSubscriber) => () => void;
+export type TimerApiSubscribe = TimerApi["subscribe"];
 
 export type TimerSubscriber = (timer: Timer, event: TimerEvent) => void;
 

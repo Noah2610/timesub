@@ -1,6 +1,6 @@
 {
     "name": "timesub",
-    "version": "0.0.0",
+    "version": "0.0.0-test-1",
     "description": "Simple subscription-based timer",
     "main": "index.js",
     "license": "MIT",
@@ -8,7 +8,8 @@
         "build": "tsc && cp ./package.json ./dist/package.json",
         "build:watch": "tsc --watch",
         "test": "jest",
-        "test:watch": "jest --watch"
+        "test:watch": "jest --watch",
+        "docs": "typedoc ./src/index.ts --out ./docs/v${npm_package_version} --theme minimal --includeVersion"
     },
     "devDependencies": {
         "@types/jest": "^26.0.23",
@@ -17,6 +18,7 @@
         "prettier": "^2.3.0",
         "ts-jest": "^27.0.2",
         "ts-node": "^10.0.0",
-        "typescript": "^4.3.2"
+        "typedoc": "^0.20.36",
+        "typescript": "~4.2.4"
     }
 }
