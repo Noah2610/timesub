@@ -9,7 +9,7 @@
         "build:watch": "tsc --watch",
         "test": "jest",
         "test:watch": "jest --watch",
-        "docs": "typedoc ./src/index.ts --theme minimal"
+        "docs": "typedoc ./src/index.ts --out ./docs/v${npm_package_version} --theme minimal --includeVersion"
     },
     "devDependencies": {
         "@types/jest": "^26.0.23",
