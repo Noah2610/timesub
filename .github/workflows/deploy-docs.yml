@@ -18,10 +18,6 @@ jobs:
               run: yarn install
             - name: Build docs
               run: yarn run docs
-            - name: Update version list in docs/index.html
-              run: |
-                  cd ./docs && \
-                  sed -Ei "s/\{\{\s*VERSIONS\s*\}\}/$( ls -dx v* )/" ./index.html
             - name: Deploy docs
               uses: peaceiris/actions-gh-pages@v3
               with:
@@ -29,3 +25,20 @@ jobs:
                   publish_dir: ./docs
                   publish_branch: docs
                   keep_files: true
+    update-version-list:
+        name: Upate version list in index.html file
+        runs-on: ubuntu-20.04
+        needs: deploy-docs
+        steps:
+            - uses: actions/checkout@v2
+              with:
+                  ref: docs
+            - name: Update version list in docs/index.html
+              run: sed -Ei "s/\{\{\s*VERSIONS\s*\}\}/$( ls -dx v* )/" ./index.html
+            - name: Push to branch
+              run: |
+                  git config user.name github-actions
+                  git config user.email github-actions@github.com
+                  git add ./index.html
+                  git commit -m "Update version list"
+                  git push
