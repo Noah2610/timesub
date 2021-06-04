@@ -76,10 +76,20 @@ export interface TimerApi {
     subscribe(cb: TimerSubscriber): () => void;
 
     /**
+     * Get the configured duration time for the timer.
+     */
+    getDuration(): TimerDuration;
+
+    /**
      * Set a new duration for the timer.
      * The duration is the max time before the timer finishes.
      */
-    setDuration(duration: Time): void;
+    setDuration(duration: TimerDuration): void;
+
+    /**
+     * Get the configured update interval for the timer.
+     */
+    getUpdateInterval(): Time;
 
     /**
      * Set a new update interval for the timer.
@@ -136,7 +146,7 @@ export interface TimerOptions {
      *
      * Default: "infinite"
      */
-    duration: Time | "infinite";
+    duration: TimerDuration;
 
     /**
      * The delay in milliseconds between every update.
@@ -147,6 +157,8 @@ export interface TimerOptions {
      */
     updateInterval: Time;
 }
+
+export type TimerDuration = Time | "infinite";
 
 /**
  * Wrapper type for time representation.

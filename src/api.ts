@@ -26,7 +26,13 @@ export function createApi(
         internalApi,
     );
     const subscribe = createApiSubscribe(state, internalState, internalApi);
+    const getDuration = createApiGetDuration(state, internalState, internalApi);
     const setDuration = createApiSetDuration(state, internalState, internalApi);
+    const getUpdateInterval = createApiGetUpdateInterval(
+        state,
+        internalState,
+        internalApi,
+    );
     const setUpdateInterval = createApiSetUpdateInterval(
         state,
         internalState,
@@ -42,7 +48,9 @@ export function createApi(
         setTime,
         getIsPlaying,
         subscribe,
+        getDuration,
         setDuration,
+        getUpdateInterval,
         setUpdateInterval,
     };
 
@@ -141,6 +149,10 @@ const createApiSubscribe: CreateApiFn<"subscribe"> =
         return () => delete internalState.subscribers[idx];
     };
 
+const createApiGetDuration: CreateApiFn<"getDuration"> =
+    (_state, internalState, _internalApi) => () =>
+        internalState.options.duration;
+
 const createApiSetDuration: CreateApiFn<"setDuration"> =
     (_state, internalState, _internalApi) => (duration) => {
         internalState.options.duration = duration;
@@ -150,3 +162,7 @@ const createApiSetUpdateInterval: CreateApiFn<"setUpdateInterval"> =
     (_state, internalState, _internalApi) => (updateInterval) => {
         internalState.options.updateInterval = updateInterval;
     };
+
+const createApiGetUpdateInterval: CreateApiFn<"getUpdateInterval"> =
+    (_state, internalState, _internalApi) => () =>
+        internalState.options.updateInterval;
