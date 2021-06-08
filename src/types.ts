@@ -158,8 +158,10 @@ export type TimerEvent =
 
 export type TimerEventType = TimerEvent["type"];
 
-export type TimerEventOfType<T extends TimerEventType> = TimerEvent & {
-    type: T;
+export type TimerEventOfType<T extends TimerEventType> = TimerEventTypeMap[T];
+
+type TimerEventTypeMap = {
+    [T in TimerEvent as T["type"]]: T;
 };
 
 /**
