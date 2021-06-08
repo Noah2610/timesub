@@ -7,5 +7,5 @@ export const createReset: CreateApiFn<"reset"> =
         state.time = 0;
         state.isPlaying = false;
         state.isFinished = false;
-        internalApi.updateSubscribers({ type: "reset" });
+        internalApi.emit({ type: "reset" });
     };

@@ -9,7 +9,7 @@ export const createSetTime: CreateApiFn<"setTime"> =
         internalApi.stopTimeout();
         internalState.lastUpdate = undefined;
         state.time = time;
-        internalApi.updateSubscribers({
+        internalApi.emit({
             type: "setTime",
             time,
         });

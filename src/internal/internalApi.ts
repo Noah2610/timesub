@@ -1,4 +1,4 @@
-import { TimerEvent, TimerState } from "../types";
+import { TimerEvent, TimerState, TimerListener } from "../types";
 import { TimerInternalState } from "./internalState";
 
 export interface TimerInternalApi {
@@ -7,7 +7,7 @@ export interface TimerInternalApi {
     update(): void;
     updateTime(): void;
     updateIsFinished(): void;
-    updateSubscribers(event: TimerEvent): void;
+    emit(event: TimerEvent): void;
 }
 
 export function createInternalApi(
@@ -48,7 +48,7 @@ export function createInternalApi(
         }
     };
 
-    const updateSubscribers = (event: TimerEvent) => {
+    const emit = (event: TimerEvent) => {
         if (!internalState.timer) {
             throw new Error(
                 "[timesub] Internal state doesn't have its Timer! " +
@@ -57,15 +57,26 @@ export function createInternalApi(
             );
         }
 
-        for (const subscriber of Object.values(internalState.subscribers)) {
+        for (const subscriber of Object.values(
+            internalState.subscribers.subscribers,
+        )) {
             subscriber(internalState.timer, event);
+        }
+
+        const listeners = internalState.listeners.listeners[event.type] as
+            | Record<number, TimerListener<typeof event.type>>
+            | undefined;
+        if (listeners) {
+            for (const listener of Object.values(listeners)) {
+                listener(internalState.timer, event);
+            }
         }
     };
 
     const update = () => {
         internalApi.updateTime();
         internalApi.updateIsFinished();
-        internalApi.updateSubscribers({
+        internalApi.emit({
             type: state.isFinished ? "finish" : "update",
         });
 
@@ -81,7 +92,7 @@ export function createInternalApi(
         update,
         updateIsFinished,
         updateTime,
-        updateSubscribers,
+        emit,
     };
 
     return internalApi;

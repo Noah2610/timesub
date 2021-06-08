@@ -78,6 +78,11 @@ export interface TimerApi {
      */
     subscribe(cb: TimerSubscriber): () => void;
 
+    on<T extends TimerEventType>(
+        eventType: T,
+        cb: TimerListener<T>,
+    ): () => void;
+
     /**
      * Get the configured duration time for the timer.
      */
@@ -104,6 +109,11 @@ export interface TimerApi {
 export type TimerApiSubscribe = TimerApi["subscribe"];
 
 export type TimerSubscriber = (timer: Timer, event: TimerEvent) => void;
+
+export type TimerListener<T extends TimerEventType> = (
+    timer: Timer,
+    event: TimerEventOfType<T>,
+) => void;
 
 /**
  * An object passed as the second argument to a subscriber callback.
@@ -137,6 +147,12 @@ export type TimerEvent =
     | {
           type: "finish";
       };
+
+export type TimerEventType = TimerEvent["type"];
+
+export type TimerEventOfType<T extends TimerEventType> = TimerEvent & {
+    type: T;
+};
 
 /**
  * Options you can pass to the `createTimer` function.

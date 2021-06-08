@@ -9,7 +9,7 @@ export const createPause: CreateApiFn<"pause"> =
         state.isPlaying = false;
         internalApi.stopTimeout();
         internalApi.updateTime();
-        internalApi.updateSubscribers({ type: "pause" });
+        internalApi.emit({ type: "pause" });
         internalState.lastUpdate = undefined;
 
         return true;

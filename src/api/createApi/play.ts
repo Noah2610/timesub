@@ -9,7 +9,7 @@ export const createPlay: CreateApiFn<"play"> =
         state.isPlaying = true;
         internalApi.startTimeout();
         internalApi.updateTime();
-        internalApi.updateSubscribers({ type: "play" });
+        internalApi.emit({ type: "play" });
 
         return true;
     };

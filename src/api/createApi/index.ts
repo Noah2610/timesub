@@ -8,6 +8,7 @@ import { createReset } from "./reset";
 import { createGetTime, createSetTime } from "./getSetTime";
 import { createGetIsPlaying } from "./getIsPlaying";
 import { createSubscribe } from "./subscribe";
+import { createOn } from "./on";
 import { createGetDuration, createSetDuration } from "./getSetDuration";
 import {
     createGetUpdateInterval,
@@ -23,6 +24,7 @@ export const createApiFns = {
     createSetTime,
     createGetIsPlaying,
     createSubscribe,
+    createOn,
     createGetDuration,
     createSetDuration,
     createGetUpdateInterval,

@@ -33,6 +33,7 @@ export function createApi(
             internalState,
             internalApi,
         ),
+        on: createApiFns.createOn(state, internalState, internalApi),
         getDuration: createApiFns.createGetDuration(
             state,
             internalState,
