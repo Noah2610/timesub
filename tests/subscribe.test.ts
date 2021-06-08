@@ -82,4 +82,42 @@ describe("subscribe to timer", () => {
         const unsubscribe = timer.subscribe(callback);
         timer.play();
     });
+
+    it("has multiple subscribers, and unsubscribes properly", () => {
+        const timer = createTimer({
+            duration: 50,
+            updateInterval: 50,
+        });
+
+        const callbacks = [
+            jest.fn(() => {}),
+            jest.fn(() => {}),
+            jest.fn(() => {}),
+        ];
+
+        const unsubscribes = callbacks.map(timer.subscribe);
+
+        // These 3 API calls should trigger all subscriber callbacks 3 times.
+        timer.play();
+        timer.pause();
+        timer.reset();
+
+        for (const callback of callbacks) {
+            expect(callback).toHaveBeenCalledTimes(3);
+        }
+
+        unsubscribes[0]!();
+
+        timer.play();
+        timer.pause();
+
+        expect(callbacks[0]).toHaveBeenCalledTimes(3);
+        for (let i = 1; i < unsubscribes.length; i++) {
+            expect(callbacks[i]!).toHaveBeenCalledTimes(5);
+        }
+
+        for (let i = 1; i < unsubscribes.length; i++) {
+            unsubscribes[i]!();
+        }
+    });
 });
