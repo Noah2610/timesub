@@ -78,6 +78,14 @@ export interface TimerApi {
      */
     subscribe(cb: TimerSubscriber): () => void;
 
+    /**
+     * Listen to specific events.
+     * Similar to `subscribe`, but only subscribes to events of given type.
+     * The given callback will be called when the `eventType` event is emitted.
+     * The callback receives the same arguments as `subscribe`'s callback,
+     * but the second argument `EventType` will always be of the type given here.
+     * Returns a function that can be called to unsubscribe this listener.
+     */
     on<T extends TimerEventType>(
         eventType: T,
         cb: TimerListener<T>,
