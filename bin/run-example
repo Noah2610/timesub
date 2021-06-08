@@ -1,0 +1,21 @@
+#!/bin/bash
+
+EXAMPLES_DIR="./examples"
+
+function main {
+    check_build
+    [ -f "${EXAMPLES_DIR}/${1}" ] || { print_usage; exit 1; }
+    node "${EXAMPLES_DIR}/${1}"
+}
+
+function check_build {
+    [ -d "./dist" ] || yarn run build
+}
+
+function print_usage {
+    local examples=
+    examples="$( ls -1 "${EXAMPLES_DIR}" | paste -sd '|' )"
+    echo -e "Usage:\n    yarn run example ${examples}"
+}
+
+main "$@"
