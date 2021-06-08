@@ -5,11 +5,12 @@ describe("listen to timer events with `on` API", () => {
         const timer = createTimer();
 
         const callback = jest.fn(
-            (timer: Timer, event: TimerEventOfType<"play">) => {
-                expect(timer.isPlaying).toBe(true);
+            ({ isPlaying, pause }: Timer, event: TimerEventOfType<"play">) => {
+                expect(isPlaying).toBe(true);
                 expect(event.type).toBe("play");
                 expect(callback).toHaveBeenCalledTimes(1);
                 unsubscribe();
+                pause();
                 done();
             },
         );
@@ -28,13 +29,17 @@ describe("listen to timer events with `on` API", () => {
         let timesCalled = 0;
 
         const callback = jest.fn(
-            (timer: Timer, event: TimerEventOfType<"update">) => {
+            (
+                { isPlaying, pause }: Timer,
+                event: TimerEventOfType<"update">,
+            ) => {
                 expect(event.type).toBe("update");
-                expect(timer.isPlaying).toBe(true);
+                expect(isPlaying).toBe(true);
                 timesCalled += 1;
                 if (timesCalled >= expectedTimesCalled) {
                     expect(callback).toHaveBeenCalledTimes(4);
                     unsubscribe();
+                    pause();
                     done();
                 }
             },
