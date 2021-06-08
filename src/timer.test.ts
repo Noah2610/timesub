@@ -34,6 +34,8 @@ describe("timer API", () => {
 
         timer.togglePlay();
         expect(timer.isPlaying).toBe(true);
+
+        timer.pause();
     });
 
     it("gets and sets time with API", () => {
