@@ -219,4 +219,23 @@ describe("listen to timer events with `on` API", () => {
 
         timer.play();
     });
+
+    it("listens to update event and unsubscribes", (done) => {
+        const timer = createTimer({
+            duration: 50,
+            updateInterval: 10,
+        });
+
+        const callback = jest.fn(() => {
+            unsubscribe();
+        });
+        const unsubscribe = timer.on("update", callback);
+
+        timer.on("finish", () => {
+            expect(callback).toHaveBeenCalledTimes(1);
+            done();
+        });
+
+        timer.play();
+    });
 });
