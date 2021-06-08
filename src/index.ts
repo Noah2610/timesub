@@ -1,5 +1,6 @@
-import { Timer, TimerOptions, TimerState } from "./types";
+import { Timer, TimerOptions } from "./types";
 import { createApi } from "./api";
+import { createState } from "./state";
 import { createInternalState } from "./internal";
 
 export * from "./types";
@@ -37,12 +38,4 @@ export function createTimer(opts?: Partial<TimerOptions>): Timer {
     internalState.timer = timer;
 
     return timer;
-}
-
-function createState(): TimerState {
-    return {
-        time: 0.0,
-        isPlaying: false,
-        isFinished: false,
-    };
 }
