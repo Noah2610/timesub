@@ -114,4 +114,51 @@ describe("listen to timer events with `on` API", () => {
 
         timer.play();
     });
+
+    it("has multiple listeners, and unsubscribes properly", () => {
+        const timer = createTimer({
+            duration: 50,
+            updateInterval: 50,
+        });
+
+        const listeners = [
+            jest.fn(() => {}),
+            jest.fn(() => {}),
+            jest.fn(() => {}),
+            jest.fn(() => {}),
+            jest.fn(() => {}),
+        ];
+
+        const unsubscribes = listeners.map((listener) =>
+            timer.on("play", listener),
+        );
+
+        // 3 play calls should trigger 3 listener calls on all listeners.
+        timer.play();
+        timer.pause();
+        timer.play();
+        timer.pause();
+        timer.play();
+        timer.pause();
+
+        for (const listener of listeners) {
+            expect(listener).toHaveBeenCalledTimes(3);
+        }
+
+        unsubscribes[0]!();
+
+        timer.play();
+        timer.pause();
+        timer.play();
+        timer.pause();
+
+        expect(listeners[0]!).toHaveBeenCalledTimes(3);
+        for (let i = 1; i < listeners.length; i++) {
+            expect(listeners[i]!).toHaveBeenCalledTimes(5);
+        }
+
+        for (let i = 1; i < unsubscribes.length; i++) {
+            unsubscribes[i]!();
+        }
+    });
 });

@@ -111,8 +111,8 @@ describe("subscribe to timer", () => {
         timer.play();
         timer.pause();
 
-        expect(callbacks[0]).toHaveBeenCalledTimes(3);
-        for (let i = 1; i < unsubscribes.length; i++) {
+        expect(callbacks[0]!).toHaveBeenCalledTimes(3);
+        for (let i = 1; i < callbacks.length; i++) {
             expect(callbacks[i]!).toHaveBeenCalledTimes(5);
         }
 
