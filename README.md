@@ -45,6 +45,15 @@ const unsubscribe = timer.subscribe(
 // Unsubscribe by calling the returned function.
 unsubscribe();
 
+// EVENT LISTENER API
+// Similar to the `subscribe` function, you can listen to specific events.
+// The callback function gets the same arguments as in the `subscribe` callback.
+const unsubscribeListener = timer.on("finish", ({ time, ...timer }, event) =>
+    console.log(`Timer finished at ${time}!`),
+);
+
+unsubscribeListener();
+
 // API
 timer.play();
 timer.pause();
