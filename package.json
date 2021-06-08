@@ -9,6 +9,9 @@
     ],
     "homepage": "https://github.com/Noah2610/timesub",
     "repository": "github:Noah2610/timesub",
+    "bin": {
+        "timesub": "./cli.js"
+    },
     "scripts": {
         "build": "tsc",
         "build:watch": "tsc --watch",
@@ -16,7 +19,8 @@
         "postbuild": "cp ./README.md ./LICENSE ./package.json ./dist",
         "test": "jest",
         "test:watch": "jest --watch",
-        "docs": "typedoc ./src/index.ts --out ./docs/v${npm_package_version} --theme minimal --includeVersion"
+        "docs": "typedoc ./src/index.ts --out ./docs/v${npm_package_version} --theme minimal --includeVersion",
+        "cli": "{ test -f './dist/cli.js' || yarn run build; } && node ./dist/cli.js"
     },
     "devDependencies": {
         "@types/jest": "^26.0.23",
