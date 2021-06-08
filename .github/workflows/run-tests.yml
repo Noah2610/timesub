@@ -1,0 +1,27 @@
+name: run-tests
+
+on:
+    push:
+        tags: "v[0-9]+.[0-9]+.[0-9]+*"
+        branches:
+            - master
+            - develop
+    pull_request:
+        branches:
+            - master
+            - develop
+
+jobs:
+    run-tests:
+        name: Run Unit Tests
+        runs-on: ubuntu-20.04
+        steps:
+            - uses: actions/checkout@v2
+            - name: Setup NodeJS
+              uses: actions/setup-node@v2
+              with:
+                  node-version: "15"
+            - name: Install dependencies
+              run: yarn install
+            - name: Run Tests with Jest
+              run: yarn run test
