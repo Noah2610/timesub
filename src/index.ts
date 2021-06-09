@@ -4,6 +4,7 @@ import { createState } from "./state";
 import { createInternalState } from "./internal";
 
 export * from "./types";
+export * as time from "./time";
 
 const DEFAULT_TIMER_OPTIONS: TimerOptions = {
     duration: "infinite",
