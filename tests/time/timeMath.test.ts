@@ -21,84 +21,72 @@ const exampleTimeB: { obj: TimeObj; ms: TimeMs } = {
     ms: 3910250,
 };
 
-describe("timeMath function", () => {
-    it("does math with time numbers", () => {
-        const a = exampleTimeA.ms;
-        const b = exampleTimeB.ms;
+describe("timeMath with numbers", () => {
+    const a = exampleTimeA.ms;
+    const b = exampleTimeB.ms;
 
-        // +
-        {
-            const expected = a + b;
-            const result = timeMath(a, b, "+");
-            expect(result).toEqual(expected);
-        }
-
-        // -
-        {
-            const expected = a - b;
-            const result = timeMath(a, b, "-");
-            expect(result).toEqual(expected);
-        }
-
-        // *
-        {
-            const expected = a * b;
-            const result = timeMath(a, b, "*");
-            expect(result).toEqual(expected);
-        }
-
-        // /
-        {
-            const expected = a / b;
-            const result = timeMath(a, b, "/");
-            expect(result).toEqual(expected);
-        }
-
-        // %
-        {
-            const expected = a % b;
-            const result = timeMath(a, b, "%");
-            expect(result).toEqual(expected);
-        }
+    it("adds numbers", () => {
+        const expected = a + b;
+        const result = timeMath(a, b, "+");
+        expect(result).toEqual(expected);
     });
 
-    it("does math with time objects", () => {
-        const a = exampleTimeA.obj;
-        const b = exampleTimeB.obj;
+    it("subtracts numbers", () => {
+        const expected = a - b;
+        const result = timeMath(a, b, "-");
+        expect(result).toEqual(expected);
+    });
 
-        // +
-        {
-            const expected = timeToObj(exampleTimeA.ms + exampleTimeB.ms);
-            const result = timeMath(a, b, "+");
-            expect(result).toEqual(expected);
-        }
+    it("multiplies numbers", () => {
+        const expected = a * b;
+        const result = timeMath(a, b, "*");
+        expect(result).toEqual(expected);
+    });
 
-        // -
-        {
-            const expected = timeToObj(exampleTimeA.ms - exampleTimeB.ms);
-            const result = timeMath(a, b, "-");
-            expect(result).toEqual(expected);
-        }
+    it("divides numbers", () => {
+        const expected = a / b;
+        const result = timeMath(a, b, "/");
+        expect(result).toEqual(expected);
+    });
 
-        // *
-        {
-            const expected = timeToObj(exampleTimeA.ms * exampleTimeB.ms);
-            const result = timeMath(a, b, "*");
-            expect(result).toEqual(expected);
-        }
+    it("modulos numbers", () => {
+        const expected = a % b;
+        const result = timeMath(a, b, "%");
+        expect(result).toEqual(expected);
+    });
+});
 
-        // /
-        {
-            const expected = timeToObj(exampleTimeA.ms / exampleTimeB.ms);
-            const result = timeMath(a, b, "/");
-            expect(result).toEqual(expected);
-        }
+describe("timeMath with objects", () => {
+    const a = exampleTimeA.obj;
+    const b = exampleTimeB.obj;
 
-        // %
-        {
-            const expected = timeToObj(exampleTimeA.ms % exampleTimeB.ms);
-            const result = timeMath(a, b, "%");
-            expect(result).toEqual(expected);
-        }
+    it("adds objects", () => {
+        const expected = timeToObj(exampleTimeA.ms + exampleTimeB.ms);
+        const result = timeMath(a, b, "+");
+        expect(result).toEqual(expected);
+    });
+
+    it("subtracts objects", () => {
+        const expected = timeToObj(exampleTimeA.ms - exampleTimeB.ms);
+        const result = timeMath(a, b, "-");
+        expect(result).toEqual(expected);
+    });
+
+    it("multiplies objects", () => {
+        const expected = timeToObj(exampleTimeA.ms * exampleTimeB.ms);
+        const result = timeMath(a, b, "*");
+        expect(result).toEqual(expected);
+    });
+
+    it("divides objects", () => {
+        const expected = timeToObj(exampleTimeA.ms / exampleTimeB.ms);
+        const result = timeMath(a, b, "/");
+        expect(result).toEqual(expected);
+    });
+
+    it("modulos objects", () => {
+        const expected = timeToObj(exampleTimeA.ms % exampleTimeB.ms);
+        const result = timeMath(a, b, "%");
+        expect(result).toEqual(expected);
     });
 });
