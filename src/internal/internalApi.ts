@@ -1,5 +1,6 @@
 import { TimerEvent, TimerState, TimerListener } from "../types";
 import { TimerInternalState } from "./internalState";
+import { timeToMs, addTime } from "./util";
 
 export interface TimerInternalApi {
     startTimeout(): void;
@@ -18,7 +19,7 @@ export function createInternalApi(
         internalApi.stopTimeout();
         internalState.timeout = setTimeout(
             update,
-            internalState.options.updateInterval,
+            timeToMs(internalState.options.updateInterval),
         );
     };
 
@@ -33,7 +34,7 @@ export function createInternalApi(
         const lastUpdate = internalState.lastUpdate ?? new Date().getTime();
         const now = new Date().getTime();
         const diff = now - lastUpdate;
-        state.time += diff;
+        state.time = addTime(state.time, diff);
         internalState.lastUpdate = now;
     };
 
