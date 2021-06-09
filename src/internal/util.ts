@@ -43,10 +43,16 @@ export function timeToObj(time: Time): TimeObj {
     };
 }
 
-/**
- * Adds the two given `Time`s together, and returns the new time.
- */
+/** Adds the two given times together. */
 export const addTime = (a: Time, b: Time) => timeMath(a, b, "+");
+/** Subtracts time `b` from time `a`. */
+export const subTime = (a: Time, b: Time) => timeMath(a, b, "-");
+/** Multiplies the two given times together. */
+export const mulTime = (a: Time, b: Time) => timeMath(a, b, "*");
+/** Divides time `a` by time `b`. */
+export const divTime = (a: Time, b: Time) => timeMath(a, b, "/");
+/** Runs the modulo (`%`) operation on time `a` with time `b`. */
+export const modTime = (a: Time, b: Time) => timeMath(a, b, "%");
 
 export function timeMath(
     timeA: Time,
