@@ -25,10 +25,7 @@ export function timeToMs(time: Time): TimeMs {
 /**
  * Converts the given `Time` to the object representation of time.
  */
-export const timeToObj = timeToObjA;
-// export const timeToObj = timeToObjB;
-
-function timeToObjA(time: Time): TimeObj {
+export function timeToObj(time: Time): TimeObj {
     if (typeof time === "object") {
         return time;
     }
@@ -46,53 +43,10 @@ function timeToObjA(time: Time): TimeObj {
     };
 }
 
-function timeToObjB(time: Time): TimeObj {
-    if (typeof time === "object") {
-        return time;
-    }
-
-    let ms = time;
-    const h = Math.floor(ms / 1000 / 60 / 60);
-    ms -= h * 60 * 60 * 1000;
-    const m = Math.floor(ms / 1000 / 60);
-    ms -= m * 60 * 1000;
-    const s = Math.floor(ms / 1000);
-    ms -= s * 1000;
-
-    return {
-        ms,
-        s,
-        m,
-        h,
-    };
-}
-
 /**
  * Adds the two given `Time`s together, and returns the new time.
  */
-export function addTime(a: Time, b: Time): Time {
-    return timeMath(a, b, "+");
-
-    // if (typeof a === "number" && typeof b === "number") {
-    //     return a + b;
-    // }
-
-    // const timeA = timeToObj(a);
-    // const timeB = timeToObj(b);
-
-    // const time: TimeObj = {};
-    // const units: (keyof TimeObj)[] = ["ms", "s", "m", "h"];
-
-    // for (const unit of units) {
-    //     const aVal = timeA[unit];
-    //     const bVal = timeB[unit];
-    //     if (aVal !== undefined || bVal !== undefined) {
-    //         time[unit] = (aVal ?? 0) + (bVal ?? 0);
-    //     }
-    // }
-
-    // return time;
-}
+export const addTime = (a: Time, b: Time) => timeMath(a, b, "+");
 
 export function timeMath(
     timeA: Time,
