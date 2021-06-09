@@ -35,8 +35,8 @@ function timeToObjA(time: Time): TimeObj {
 
     const h = Math.floor(time / 1000 / 60 / 60);
     const m = Math.floor(time / 1000 / 60) - h * 60;
-    const s = Math.floor(time / 1000) - h * 60 - m * 60;
-    const ms = time - h * 60 - m * 60 - s * 1000;
+    const s = Math.floor(time / 1000) - h * 60 * 60 - m * 60;
+    const ms = time - h * 60 * 60 * 1000 - m * 60 * 1000 - s * 1000;
 
     return {
         ms,
@@ -53,9 +53,9 @@ function timeToObjB(time: Time): TimeObj {
 
     let ms = time;
     const h = Math.floor(ms / 1000 / 60 / 60);
-    ms -= h * 60;
+    ms -= h * 60 * 60 * 1000;
     const m = Math.floor(ms / 1000 / 60);
-    ms -= m * 60;
+    ms -= m * 60 * 1000;
     const s = Math.floor(ms / 1000);
     ms -= s * 1000;
 
@@ -94,7 +94,7 @@ export function addTime(a: Time, b: Time): Time {
     // return time;
 }
 
-function timeMath(
+export function timeMath(
     timeA: Time,
     timeB: Time,
     op: "+" | "-" | "*" | "/" | "%",
@@ -109,18 +109,23 @@ function timeMath(
     switch (op) {
         case "+": {
             x = a + b;
+            break;
         }
         case "-": {
             x = a - b;
+            break;
         }
         case "*": {
             x = a * b;
+            break;
         }
         case "/": {
             x = a / b;
+            break;
         }
         case "%": {
             x = a % b;
+            break;
         }
     }
 
