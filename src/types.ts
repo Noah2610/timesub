@@ -1,3 +1,5 @@
+import { Time } from "./time";
+
 /**
  * The Timer context, containing both the state and API functions.
  */
@@ -190,23 +192,4 @@ export interface TimerOptions {
 
 export type TimerDuration = Time | "infinite";
 
-/**
- * Wrapper type for time representation.
- * Either a `number` as milliseconds, or
- * an object with optional number properties:
- *   - `ms` for milliseconds
- *   - `s`  for seconds
- *   - `m`  for minutes
- *   - `h`  for hours
- */
-export type Time =
-    | number
-    | {
-          ms?: number;
-          s?: number;
-          m?: number;
-          h?: number;
-      };
-
-export type TimeMs = Time & number;
-export type TimeObj = Time & object;
+export { Time };

@@ -1,6 +1,6 @@
 import { TimerEvent, TimerState, TimerListener } from "../types";
+import { addTime, timeToMs } from "../time";
 import { TimerInternalState } from "./internalState";
-import { timeToMs, addTime } from "./util";
 
 export interface TimerInternalApi {
     startTimeout(): void;

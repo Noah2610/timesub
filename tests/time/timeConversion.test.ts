@@ -1,5 +1,4 @@
-import { TimeObj, TimeMs } from "../../src/types";
-import { timeToMs, timeToObj } from "../../src/internal/util";
+import { TimeMs, TimeObj, timeToMs, timeToObj } from "../../src/time";
 
 const expectedTime: { obj: TimeObj; ms: TimeMs } = {
     obj: {
