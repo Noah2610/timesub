@@ -36,6 +36,7 @@ function cli(durationS: string) {
     });
 
     timer.on("finish", () => {
+        process.stdout.write("\n");
         process.exit(0);
     });
 
