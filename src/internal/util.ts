@@ -71,23 +71,58 @@ function timeToObjB(time: Time): TimeObj {
  * Adds the two given `Time`s together, and returns the new time.
  */
 export function addTime(a: Time, b: Time): Time {
-    if (typeof a === "number" && typeof b === "number") {
-        return a + b;
-    }
+    return timeMath(a, b, "+");
 
-    const timeA = timeToObj(a);
-    const timeB = timeToObj(b);
+    // if (typeof a === "number" && typeof b === "number") {
+    //     return a + b;
+    // }
 
-    const time: TimeObj = {};
-    const units: (keyof TimeObj)[] = ["ms", "s", "m", "h"];
+    // const timeA = timeToObj(a);
+    // const timeB = timeToObj(b);
 
-    for (const unit of units) {
-        const aVal = timeA[unit];
-        const bVal = timeB[unit];
-        if (aVal !== undefined || bVal !== undefined) {
-            time[unit] = (aVal ?? 0) + (bVal ?? 0);
+    // const time: TimeObj = {};
+    // const units: (keyof TimeObj)[] = ["ms", "s", "m", "h"];
+
+    // for (const unit of units) {
+    //     const aVal = timeA[unit];
+    //     const bVal = timeB[unit];
+    //     if (aVal !== undefined || bVal !== undefined) {
+    //         time[unit] = (aVal ?? 0) + (bVal ?? 0);
+    //     }
+    // }
+
+    // return time;
+}
+
+function timeMath(
+    timeA: Time,
+    timeB: Time,
+    op: "+" | "-" | "*" | "/" | "%",
+): Time {
+    const returnAsNum = typeof timeA === "number" && typeof timeB === "number";
+
+    const a = timeToMs(timeA);
+    const b = timeToMs(timeB);
+
+    let x: number;
+
+    switch (op) {
+        case "+": {
+            x = a + b;
+        }
+        case "-": {
+            x = a - b;
+        }
+        case "*": {
+            x = a * b;
+        }
+        case "/": {
+            x = a / b;
+        }
+        case "%": {
+            x = a % b;
         }
     }
 
-    return time;
+    return returnAsNum ? x : timeToObj(x);
 }
