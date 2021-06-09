@@ -74,6 +74,7 @@ export interface TimerApi {
      *   1. The `Timer` context, including state and API functions,
      *   2. A `TimerEvent` object, that contains a `type` property,
      *      informing what caused the update.
+     *
      * Returns a function that can be called to unsubscribe.
      */
     subscribe(cb: TimerSubscriber): () => void;
@@ -191,6 +192,21 @@ export type TimerDuration = Time | "infinite";
 
 /**
  * Wrapper type for time representation.
- * Just a number in milliseconds.
+ * Either a `number` as milliseconds, or
+ * an object with optional number properties:
+ *   - `ms` for milliseconds
+ *   - `s`  for seconds
+ *   - `m`  for minutes
+ *   - `h`  for hours
  */
-export type Time = number;
+export type Time =
+    | number
+    | {
+          ms?: number;
+          s?: number;
+          m?: number;
+          h?: number;
+      };
+
+export type TimeMs = Time & number;
+export type TimeObj = Time & object;
