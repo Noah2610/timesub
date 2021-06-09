@@ -9,4 +9,8 @@ export const createSetDuration: CreateApiFn<"setDuration"> =
         internalState.options.duration = duration;
         // Update to reflect changes immediately
         internalApi.update();
+        internalApi.emit({
+            type: "setDuration",
+            duration,
+        });
     };

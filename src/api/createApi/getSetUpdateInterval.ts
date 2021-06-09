@@ -9,4 +9,8 @@ export const createSetUpdateInterval: CreateApiFn<"setUpdateInterval"> =
         internalState.options.updateInterval = updateInterval;
         // Update to reflect changes immediately
         internalApi.update();
+        internalApi.emit({
+            type: "setUpdateInterval",
+            updateInterval,
+        });
     };
