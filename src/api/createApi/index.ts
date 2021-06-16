@@ -14,6 +14,7 @@ import {
     createGetUpdateInterval,
     createSetUpdateInterval,
 } from "./getSetUpdateInterval";
+import { createCleanup } from "./cleanup";
 
 export const createApiFns = {
     createPlay,
@@ -29,6 +30,7 @@ export const createApiFns = {
     createSetDuration,
     createGetUpdateInterval,
     createSetUpdateInterval,
+    createCleanup,
 };
 
 export type CreateApiFn<

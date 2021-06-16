@@ -112,6 +112,16 @@ export interface TimerApi {
      * This is the delay time in milliseconds between every time update.
      */
     setUpdateInterval(updateInterval: Time): void;
+
+    /**
+     * Call this function, when you're done with the timer,
+     * and want it to cleanup any running timeouts.
+     * This will emit one final "cleanup" event to all subscribers.
+     *
+     * After calling `cleanup()` you cannot call any API functions anymore!
+     * Every API function will throw an error if you call it afterwards.
+     */
+    cleanup(): void;
 }
 
 export type TimerApiSubscribe = TimerApi["subscribe"];
@@ -170,6 +180,12 @@ export type TimerEvent =
     | {
           type: "setUpdateInterval";
           updateInterval: Time;
+      }
+    /**
+     * When the `cleanup()` function is called.
+     */
+    | {
+          type: "cleanup";
       };
 
 export type TimerEventType = TimerEvent["type"];
