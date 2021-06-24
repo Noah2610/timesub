@@ -1,0 +1,66 @@
+#!/bin/bash
+
+EXAMPLES_DIR="./examples"
+
+function main {
+    check_build
+    if [ "$1" == "all" ]; then
+        run_all_examples
+    else
+        run_example "$1"
+    fi
+}
+
+function check_build {
+    [ -d "./dist" ] || yarn run build
+}
+
+function run_all_examples {
+    local padding_char="#"
+    local padding_len=
+    local padding=
+    local examples=()
+    local example
+    get_examples examples
+    for example in ${examples[*]}; do
+        padding_len=$(( ${#example} + 4 ))
+        padding="$( get_chars_with_len "$padding_char" "$padding_len" )"
+        echo -e "${padding}\n${padding_char} ${example} ${padding_char}\n${padding}"
+        run_example "$example" || exit 1
+        echo
+    done
+}
+
+function run_example {
+    [ -f "${EXAMPLES_DIR}/${1}" ] || { print_usage; exit 1; }
+    node "${EXAMPLES_DIR}/${1}"
+}
+
+function print_usage {
+    local examples=()
+    local examples_display=
+    get_examples examples
+    examples_display="$( echo "${examples[@]}" | paste -sd '|' )"
+    echo -e "Usage:\n    yarn run example all|${examples_display}"
+}
+
+function get_examples {
+    local -n examples_ref=$1
+    examples_ref=("$(
+        ls -1 "${EXAMPLES_DIR}" \
+            | sed '/\.jsx$/d' \
+    )")
+}
+
+function get_chars_with_len {
+    local char="$1"
+    local len=$2
+    local chars=""
+    local i=
+    for (( i = 0; i < $len; i++ )); do
+        chars="${chars}${char}"
+    done
+    echo "$chars"
+}
+
+main "$@"

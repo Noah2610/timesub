@@ -1,6 +1,6 @@
 {
     "name": "timesub",
-    "version": "1.0.1",
+    "version": "1.1.1",
     "description": "Simple subscription-based timer",
     "main": "index.js",
     "license": "MIT",
@@ -20,6 +20,7 @@
         "test": "jest",
         "test:watch": "jest --watch",
         "docs": "typedoc ./src/index.ts --out ./docs/v${npm_package_version} --theme minimal --includeVersion",
+        "example": "bin/run-example",
         "cli": "{ test -f './dist/cli.js' || yarn run build; } && node ./dist/cli.js"
     },
     "devDependencies": {
