@@ -11,17 +11,18 @@
     "homepage": "https://github.com/Noah2610/timesub",
     "repository": "github:Noah2610/timesub",
     "bin": {
-        "timesub": "./index.js"
+        "timesub": "./timesub-cli.js"
     },
     "scripts": {
-        "start": "node ./dist/index.js",
+        "start": "cd ./dist && ./timesub-cli.js",
         "build": "tsc",
         "build:watch": "tsc --watch",
         "prebuild": "rm -rf ./dist",
-        "postbuild": "cp ../README.md ../LICENSE ./package.json ./dist"
+        "postbuild": "cp ../README.md ../LICENSE ./package.json ./timesub-cli.js ./dist"
     },
     "dependencies": {
-        "timesub": "^1.1.1"
+        "timesub": "^1.1.1",
+        "yargs": "^17.0.1"
     },
     "devDependencies": {
         "typescript": "^4.3.4"
