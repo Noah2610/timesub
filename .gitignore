@@ -2,4 +2,5 @@
 /dist/
 /docs/*
 !/docs/index.html
-/*.log
+
+*.log

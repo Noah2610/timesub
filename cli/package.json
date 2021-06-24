@@ -1,0 +1,29 @@
+{
+    "name": "timesub-cli",
+    "version": "0.0.0",
+    "description": "CLI app for the timesub package",
+    "main": "index.js",
+    "license": "MIT",
+    "keywords": [
+        "timer",
+        "cli"
+    ],
+    "homepage": "https://github.com/Noah2610/timesub",
+    "repository": "github:Noah2610/timesub",
+    "bin": {
+        "timesub": "./index.js"
+    },
+    "scripts": {
+        "start": "node ./dist/index.js",
+        "build": "tsc",
+        "build:watch": "tsc --watch",
+        "prebuild": "rm -rf ./dist",
+        "postbuild": "cp ../README.md ../LICENSE ./package.json ./dist"
+    },
+    "dependencies": {
+        "timesub": "^1.1.1"
+    },
+    "devDependencies": {
+        "typescript": "^4.3.4"
+    }
+}

@@ -10,7 +10,7 @@
     "homepage": "https://github.com/Noah2610/timesub",
     "repository": "github:Noah2610/timesub",
     "bin": {
-        "timesub": "./cli.js"
+        "timesub-minimal": "./cli.js"
     },
     "scripts": {
         "build": "tsc",
