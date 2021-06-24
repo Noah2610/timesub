@@ -161,4 +161,58 @@ describe("listen to timer events with `on` API", () => {
             unsubscribes[i]!();
         }
     });
+
+    it("listens to setDuration event", () => {
+        const initialDuration = 100;
+        const expectedDuration = 200;
+
+        const timer = createTimer({
+            duration: initialDuration,
+        });
+
+        const callback = jest.fn(
+            (timer: Timer, event: TimerEventOfType<"setDuration">) => {
+                expect(event.type).toBe("setDuration");
+                expect(event.duration).toBe(expectedDuration);
+                expect(timer.getDuration()).toBe(expectedDuration);
+            },
+        );
+        const unsubscribe = timer.on("setDuration", callback);
+
+        expect(timer.getDuration()).toBe(initialDuration);
+
+        timer.setDuration(expectedDuration);
+
+        expect(timer.getDuration()).toBe(expectedDuration);
+        expect(callback).toHaveBeenCalledTimes(1);
+
+        unsubscribe();
+    });
+
+    it("listens to setUpdateInterval event", () => {
+        const initialUpdateInterval = 100;
+        const expectedUpdateInterval = 50;
+
+        const timer = createTimer({
+            updateInterval: initialUpdateInterval,
+        });
+
+        const callback = jest.fn(
+            (timer: Timer, event: TimerEventOfType<"setUpdateInterval">) => {
+                expect(event.type).toBe("setUpdateInterval");
+                expect(event.updateInterval).toBe(expectedUpdateInterval);
+                expect(timer.getUpdateInterval()).toBe(expectedUpdateInterval);
+            },
+        );
+        const unsubscribe = timer.on("setUpdateInterval", callback);
+
+        expect(timer.getUpdateInterval()).toBe(initialUpdateInterval);
+
+        timer.setUpdateInterval(expectedUpdateInterval);
+
+        expect(timer.getUpdateInterval()).toBe(expectedUpdateInterval);
+        expect(callback).toHaveBeenCalledTimes(1);
+
+        unsubscribe();
+    });
 });

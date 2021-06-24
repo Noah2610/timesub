@@ -124,7 +124,7 @@ export type TimerListener<T extends TimerEventType> = (
 ) => void;
 
 /**
- * An object passed as the second argument to a subscriber callback.
+ * An object passed as the second argument to subscriber/listener callbacks.
  */
 export type TimerEvent =
     /** When the `play()` function triggered the update. */
@@ -138,7 +138,7 @@ export type TimerEvent =
     /**
      * When the `setTime()` function triggered the update.
      * Also gets the target `time`, used with the `setTime` call.
-     * */
+     */
     | {
           type: "setTime";
           time: Time;
@@ -154,6 +154,22 @@ export type TimerEvent =
     /** When the timer finishes. */
     | {
           type: "finish";
+      }
+    /**
+     * When the `setDuration()` function triggered the update.
+     * Gets the new `duration` time that was set.
+     */
+    | {
+          type: "setDuration";
+          duration: TimerDuration;
+      }
+    /**
+     * When the `setUpdateInterval()` function triggered the update.
+     * Gets the new `updateInterval` time that was set.
+     */
+    | {
+          type: "setUpdateInterval";
+          updateInterval: Time;
       };
 
 export type TimerEventType = TimerEvent["type"];
