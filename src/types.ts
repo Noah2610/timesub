@@ -94,14 +94,17 @@ export interface TimerApi {
     /**
      * Get the configured value for the given option key.
      */
-    getOption<T extends keyof TimerOptions>(option: T): TimerOptions[T];
+    getOption<O extends keyof TimerOptions>(option: O): TimerOptions[O];
 
     /**
      * Set a new value for the given option key.
      */
-    setOption<T extends keyof TimerOptions>(
-        option: T,
-        value: TimerOptions[T],
+    setOption<
+        O extends keyof TimerOptions,
+        V extends TimerOptions[O] = TimerOptions[O],
+    >(
+        option: O,
+        value: V,
     ): void;
 
     /**
@@ -177,6 +180,15 @@ export type TimerEvent =
           type: "finish";
       }
     /**
+     * Emitted events for every `setOption` call.
+     *
+     * Event type is `"setOption-<option>"`, where `<option>` is an option key.
+     * Has `option` field with the option key that was set, and
+     * a `value` field with the newly set value for the option.
+     */
+    | TimerSetOptionEvent<"duration">
+    | TimerSetOptionEvent<"updateInterval">
+    /**
      * When the `setDuration()` function triggered the update.
      * Gets the new `duration` time that was set.
      */
@@ -192,6 +204,15 @@ export type TimerEvent =
           type: "setUpdateInterval";
           updateInterval: Time;
       };
+
+export type TimerSetOptionEvent<
+    O extends keyof TimerOptions = keyof TimerOptions,
+    V extends TimerOptions[O] = TimerOptions[O],
+> = {
+    type: `setOption-${O}`;
+    option: O;
+    value: V;
+};
 
 export type TimerEventType = TimerEvent["type"];
 
