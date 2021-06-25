@@ -16,7 +16,7 @@
         "postbuild": "cp ./README.md ./LICENSE ./package.json ./dist",
         "test": "jest",
         "test:watch": "jest --watch",
-        "docs": "typedoc ./src/index.ts --out ./docs/v${npm_package_version} --theme minimal --includeVersion",
+        "docs": "typedoc ./src/index.ts --out ./docs/v${npm_package_version} --includeVersion",
         "example": "bin/run-example"
     },
     "devDependencies": {
