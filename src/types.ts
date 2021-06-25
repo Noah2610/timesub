@@ -92,22 +92,43 @@ export interface TimerApi {
     ): () => void;
 
     /**
+     * Get the configured value for the given option key.
+     */
+    getOption<T extends keyof TimerOptions>(option: T): TimerOptions[T];
+
+    /**
+     * Set a new value for the given option key.
+     */
+    setOption<T extends keyof TimerOptions>(
+        option: T,
+        value: TimerOptions[T],
+    ): void;
+
+    /**
+     * @deprecated Prefer `getOption("duration")` instead.
+     *
      * Get the configured duration time for the timer.
      */
     getDuration(): TimerDuration;
 
     /**
+     * @deprecated Prefer `setOption("duration", 1234)` instead.
+     *
      * Set a new duration for the timer.
      * The duration is the max time before the timer finishes.
      */
     setDuration(duration: TimerDuration): void;
 
     /**
+     * @deprecated Prefer `getOption("updateInterval")` instead.
+     *
      * Get the configured update interval for the timer.
      */
     getUpdateInterval(): Time;
 
     /**
+     * @deprecated Prefer `setOption("updateInterval", 50)` instead.
+     *
      * Set a new update interval for the timer.
      * This is the delay time in milliseconds between every time update.
      */

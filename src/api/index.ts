@@ -34,6 +34,16 @@ export function createApi(
             internalApi,
         ),
         on: createApiFns.createOn(state, internalState, internalApi),
+        getOption: createApiFns.createGetOption(
+            state,
+            internalState,
+            internalApi,
+        ),
+        setOption: createApiFns.createSetOption(
+            state,
+            internalState,
+            internalApi,
+        ),
         getDuration: createApiFns.createGetDuration(
             state,
             internalState,
