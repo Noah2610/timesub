@@ -8,6 +8,7 @@ export * from "./types";
 const DEFAULT_TIMER_OPTIONS: TimerOptions = {
     duration: "infinite",
     updateInterval: 100,
+    direction: "forward",
 };
 
 /**

@@ -201,9 +201,21 @@ export interface TimerOptions {
      * Default: 100
      */
     updateInterval: Time;
+
+    /**
+     * In which direction the timer should count towards.
+     *
+     * `"forward"` counts from `0` to `duration`.
+     * `"backward"` counts from `duration` to `0`.
+     *
+     * Default: "forward"
+     */
+    direction: TimerDirection;
 }
 
 export type TimerDuration = Time | "infinite";
+
+export type TimerDirection = "forward" | "backward";
 
 /**
  * Wrapper type for time representation.
