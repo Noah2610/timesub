@@ -208,6 +208,9 @@ export interface TimerOptions {
      * `"forward"` counts from `0` to `duration`.
      * `"backward"` counts from `duration` to `0`.
      *
+     * Note, that if direction is `"backward"` and `duration` is `"infinite"`,
+     * the timer will start at `0` and count backwards into negative infinity.
+     *
      * Default: "forward"
      */
     direction: TimerDirection;
