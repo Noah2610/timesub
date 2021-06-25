@@ -1,5 +1,6 @@
-import { TimerEvent, TimerState, TimerListener } from "../types";
+import { TimerEvent, TimerListener, TimerState } from "../types";
 import { TimerInternalState } from "./internalState";
+import { isTimerFinished, updateTimeWithDirection } from "./util";
 
 export interface TimerInternalApi {
     startTimeout(): void;
@@ -33,16 +34,17 @@ export function createInternalApi(
         const lastUpdate = internalState.lastUpdate ?? new Date().getTime();
         const now = new Date().getTime();
         const diff = now - lastUpdate;
-        state.time += diff;
+        state.time = updateTimeWithDirection(
+            state.time,
+            diff,
+            internalState.options.direction,
+        );
         internalState.lastUpdate = now;
     };
 
     const updateIsFinished = () => {
         const wasFinished = state.isFinished;
-        state.isFinished =
-            internalState.options.duration === "infinite"
-                ? false
-                : state.time >= internalState.options.duration;
+        state.isFinished = isTimerFinished(state.time, internalState.options);
         if (state.isFinished && state.isFinished !== wasFinished) {
             state.isPlaying = false;
         }
