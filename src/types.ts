@@ -86,7 +86,7 @@ export interface TimerApi {
      * but the second argument `EventType` will always be of the type given here.
      * Returns a function that can be called to unsubscribe this listener.
      */
-    on<T extends TimerEventType>(
+    on<T extends TimerEventType | TimerEventType[]>(
         eventType: T,
         cb: TimerListener<T>,
     ): () => void;
@@ -118,9 +118,9 @@ export type TimerApiSubscribe = TimerApi["subscribe"];
 
 export type TimerSubscriber = (timer: Timer, event: TimerEvent) => void;
 
-export type TimerListener<T extends TimerEventType> = (
+export type TimerListener<T extends TimerEventType | TimerEventType[]> = (
     timer: Timer,
-    event: TimerEventOfType<T>,
+    event: TimerEventOfType<T extends TimerEventType ? T : TimerEventType>,
 ) => void;
 
 /**
