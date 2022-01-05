@@ -18,4 +18,5 @@ export const createSetTime: CreateApiFn<"setTime"> =
         // is playing. It will also update subscribers again, which may
         // not be what we want here, because we already update them above.
         internalApi.update();
+        internalState.lastUpdate = undefined;
     };
