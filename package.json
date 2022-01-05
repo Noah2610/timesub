@@ -1,6 +1,6 @@
 {
     "name": "timesub",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "description": "Simple subscription-based timer",
     "main": "index.js",
     "license": "MIT",
