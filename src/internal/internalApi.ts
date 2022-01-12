@@ -74,15 +74,20 @@ export function createInternalApi(
     };
 
     const update = () => {
-        internalApi.updateTime();
+        if (state.isPlaying) {
+            internalApi.updateTime();
+        }
+
         internalApi.updateIsFinished();
         internalApi.emit({
             type: state.isFinished ? "finish" : "update",
         });
 
-        internalApi.stopTimeout();
-        if (!state.isFinished && state.isPlaying) {
+        const shouldPlay = !state.isFinished && state.isPlaying;
+        if (shouldPlay) {
             internalApi.startTimeout();
+        } else {
+            internalApi.stopTimeout();
         }
     };
 
