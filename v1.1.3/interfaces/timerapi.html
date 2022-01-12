@@ -1,0 +1,601 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>TimerApi | timesub - v1.1.3</title>
+	<meta name="description" content="Documentation for timesub - v1.1.3">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">timesub - v1.1.3</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../modules.html">timesub - v1.1.3</a>
+				</li>
+				<li>
+					<a href="timerapi.html">TimerApi</a>
+				</li>
+			</ul>
+			<h1>Interface TimerApi</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Timer API functions, to control playback and subscribe to state changes.</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">TimerApi</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<a href="timer.html" class="tsd-signature-type" data-tsd-kind="Interface">Timer</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="timerapi.html#getduration" class="tsd-kind-icon">get<wbr>Duration</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="timerapi.html#getisplaying" class="tsd-kind-icon">get<wbr>IsPlaying</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="timerapi.html#gettime" class="tsd-kind-icon">get<wbr>Time</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="timerapi.html#getupdateinterval" class="tsd-kind-icon">get<wbr>Update<wbr>Interval</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter"><a href="timerapi.html#on" class="tsd-kind-icon">on</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="timerapi.html#pause" class="tsd-kind-icon">pause</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="timerapi.html#play" class="tsd-kind-icon">play</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="timerapi.html#reset" class="tsd-kind-icon">reset</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="timerapi.html#setduration" class="tsd-kind-icon">set<wbr>Duration</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="timerapi.html#settime" class="tsd-kind-icon">set<wbr>Time</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="timerapi.html#setupdateinterval" class="tsd-kind-icon">set<wbr>Update<wbr>Interval</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="timerapi.html#subscribe" class="tsd-kind-icon">subscribe</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="timerapi.html#toggleplay" class="tsd-kind-icon">toggle<wbr>Play</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="getduration" class="tsd-anchor"></a>
+					<h3>get<wbr>Duration</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Duration<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules.html#timerduration" class="tsd-signature-type" data-tsd-kind="Type alias">TimerDuration</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Noah2610/timesub/blob/240e14f/src/types.ts#L97">types.ts:97</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get the configured duration time for the timer.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <a href="../modules.html#timerduration" class="tsd-signature-type" data-tsd-kind="Type alias">TimerDuration</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="getisplaying" class="tsd-anchor"></a>
+					<h3>get<wbr>IsPlaying</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>IsPlaying<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Noah2610/timesub/blob/240e14f/src/types.ts#L68">types.ts:68</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get playback status.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="gettime" class="tsd-anchor"></a>
+					<h3>get<wbr>Time</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Time<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Noah2610/timesub/blob/240e14f/src/types.ts#L58">types.ts:58</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get the current time.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="getupdateinterval" class="tsd-anchor"></a>
+					<h3>get<wbr>Update<wbr>Interval</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Update<wbr>Interval<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Noah2610/timesub/blob/240e14f/src/types.ts#L108">types.ts:108</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get the configured update interval for the timer.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
+					<a name="on" class="tsd-anchor"></a>
+					<h3>on</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">on&lt;T&gt;<span class="tsd-signature-symbol">(</span>eventType<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, cb<span class="tsd-signature-symbol">: </span><a href="../modules.html#timerlistener" class="tsd-signature-type" data-tsd-kind="Type alias">TimerListener</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Noah2610/timesub/blob/240e14f/src/types.ts#L89">types.ts:89</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Listen to specific events.
+										Similar to <code>subscribe</code>, but only subscribes to events of given type.
+										The given callback will be called when the <code>eventType</code> event is emitted.
+										The callback receives the same arguments as <code>subscribe</code>&#39;s callback,
+										but the second argument <code>EventType</code> will always be of the type given here.
+									Returns a function that can be called to unsubscribe this listener.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">&quot;play&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;pause&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;setTime&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;reset&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;update&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;finish&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;setDuration&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;setUpdateInterval&quot;</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>eventType: <span class="tsd-signature-type">T</span></h5>
+								</li>
+								<li>
+									<h5>cb: <a href="../modules.html#timerlistener" class="tsd-signature-type" data-tsd-kind="Type alias">TimerListener</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter-signature">
+									<ul class="tsd-signatures tsd-kind-type-literal">
+										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+									</ul>
+									<ul class="tsd-descriptions">
+										<li class="tsd-description">
+											<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="pause" class="tsd-anchor"></a>
+					<h3>pause</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">pause<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Noah2610/timesub/blob/240e14f/src/types.ts#L41">types.ts:41</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Pause the timer.
+									Returns <code>true</code> if it got paused because of this call.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="play" class="tsd-anchor"></a>
+					<h3>play</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">play<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Noah2610/timesub/blob/240e14f/src/types.ts#L35">types.ts:35</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Play the timer, if it&#39;s paused.
+									Returns <code>true</code> if it started playing because of this call.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="reset" class="tsd-anchor"></a>
+					<h3>reset</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">reset<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Noah2610/timesub/blob/240e14f/src/types.ts#L53">types.ts:53</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Resets the timer time to 0, and stops the timer if it was playing.
+									All subscriptions will be kept.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="setduration" class="tsd-anchor"></a>
+					<h3>set<wbr>Duration</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Duration<span class="tsd-signature-symbol">(</span>duration<span class="tsd-signature-symbol">: </span><a href="../modules.html#timerduration" class="tsd-signature-type" data-tsd-kind="Type alias">TimerDuration</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Noah2610/timesub/blob/240e14f/src/types.ts#L103">types.ts:103</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Set a new duration for the timer.
+									The duration is the max time before the timer finishes.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>duration: <a href="../modules.html#timerduration" class="tsd-signature-type" data-tsd-kind="Type alias">TimerDuration</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="settime" class="tsd-anchor"></a>
+					<h3>set<wbr>Time</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Time<span class="tsd-signature-symbol">(</span>time<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Noah2610/timesub/blob/240e14f/src/types.ts#L63">types.ts:63</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Set the time to the given <code>time</code> in milliseconds.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>time: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="setupdateinterval" class="tsd-anchor"></a>
+					<h3>set<wbr>Update<wbr>Interval</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Update<wbr>Interval<span class="tsd-signature-symbol">(</span>updateInterval<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Noah2610/timesub/blob/240e14f/src/types.ts#L114">types.ts:114</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Set a new update interval for the timer.
+									This is the delay time in milliseconds between every time update.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>updateInterval: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="subscribe" class="tsd-anchor"></a>
+					<h3>subscribe</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">subscribe<span class="tsd-signature-symbol">(</span>cb<span class="tsd-signature-symbol">: </span><a href="../modules.html#timersubscriber" class="tsd-signature-type" data-tsd-kind="Type alias">TimerSubscriber</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Noah2610/timesub/blob/240e14f/src/types.ts#L79">types.ts:79</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Subscribe to time updates.
+										The given callback function will be called anytime the state changes.
+									The callback gets two arguments:</p>
+									<ol>
+										<li>The <code>Timer</code> context, including state and API functions,</li>
+										<li>A <code>TimerEvent</code> object, that contains a <code>type</code> property,
+											informing what caused the update.
+										Returns a function that can be called to unsubscribe.</li>
+									</ol>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>cb: <a href="../modules.html#timersubscriber" class="tsd-signature-type" data-tsd-kind="Type alias">TimerSubscriber</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter-signature">
+									<ul class="tsd-signatures tsd-kind-type-literal">
+										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+									</ul>
+									<ul class="tsd-descriptions">
+										<li class="tsd-description">
+											<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="toggleplay" class="tsd-anchor"></a>
+					<h3>toggle<wbr>Play</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">toggle<wbr>Play<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Noah2610/timesub/blob/240e14f/src/types.ts#L47">types.ts:47</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Toggle between playing and paused states.
+									Returns <code>true</code> if it successfully toggled play states.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="../modules.html">Exports</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-interface">
+						<a href="timer.html" class="tsd-kind-icon">Timer</a>
+					</li>
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface">
+						<a href="timerapi.html" class="tsd-kind-icon">Timer<wbr>Api</a>
+						<ul>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="timerapi.html#getduration" class="tsd-kind-icon">get<wbr>Duration</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="timerapi.html#getisplaying" class="tsd-kind-icon">get<wbr>IsPlaying</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="timerapi.html#gettime" class="tsd-kind-icon">get<wbr>Time</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="timerapi.html#getupdateinterval" class="tsd-kind-icon">get<wbr>Update<wbr>Interval</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
+								<a href="timerapi.html#on" class="tsd-kind-icon">on</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="timerapi.html#pause" class="tsd-kind-icon">pause</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="timerapi.html#play" class="tsd-kind-icon">play</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="timerapi.html#reset" class="tsd-kind-icon">reset</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="timerapi.html#setduration" class="tsd-kind-icon">set<wbr>Duration</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="timerapi.html#settime" class="tsd-kind-icon">set<wbr>Time</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="timerapi.html#setupdateinterval" class="tsd-kind-icon">set<wbr>Update<wbr>Interval</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="timerapi.html#subscribe" class="tsd-kind-icon">subscribe</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="timerapi.html#toggleplay" class="tsd-kind-icon">toggle<wbr>Play</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<li class=" tsd-kind-interface">
+						<a href="timeroptions.html" class="tsd-kind-icon">Timer<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="timerstate.html" class="tsd-kind-icon">Timer<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../modules.html#time" class="tsd-kind-icon">Time</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../modules.html#timerapisubscribe" class="tsd-kind-icon">Timer<wbr>Api<wbr>Subscribe</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../modules.html#timerduration" class="tsd-kind-icon">Timer<wbr>Duration</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../modules.html#timerevent" class="tsd-kind-icon">Timer<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="../modules.html#timereventoftype" class="tsd-kind-icon">Timer<wbr>Event<wbr>OfType</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../modules.html#timereventtype" class="tsd-kind-icon">Timer<wbr>Event<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="../modules.html#timerlistener" class="tsd-kind-icon">Timer<wbr>Listener</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../modules.html#timersubscriber" class="tsd-kind-icon">Timer<wbr>Subscriber</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../modules.html#createtimer" class="tsd-kind-icon">create<wbr>Timer</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
